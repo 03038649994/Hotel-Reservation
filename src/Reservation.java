@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Karan Bhargava
  * @version 1.2016.991
  */
-public class Reservation implements Serializable {
+public class Reservation implements Serializable, Comparable<Reservation> {
 
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
 	private Date startDate;
@@ -80,7 +80,7 @@ public class Reservation implements Serializable {
 	 * A getter method to get the ending date of the reservation
 	 * @return endDate - the ending date
 	 */
-	public Date getendDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
@@ -98,6 +98,17 @@ public class Reservation implements Serializable {
 	 */
 	public String toString() {
 		return "Room #" + getRoomNumber() + " check in: " + dateFormat.format(startDate) + " check out: " + dateFormat.format(endDate);
+	}
+
+	@Override
+	public int compareTo(Reservation other)
+	{
+		if(getStartDate().after(other.getStartDate())) {
+			return  -1;
+		}
+		else {
+			return 1;
+		}
 	}
 
 
