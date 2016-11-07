@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -19,10 +18,10 @@ public class Hotel implements Serializable {
 
 	//instance variables for a Hotel
 
-	private ArrayList<Room> roomsInHotel;
-	private ArrayList<Room> numOfRoomsInHotel;
-	private ArrayList<User> usersOfHotel;
-	private transient ArrayList<ChangeListener> listener = new ArrayList<ChangeListener>();
+	private ArrayList<Room> roomsInHotel; //total number of rooms
+	private ArrayList<Room> numOfRoomsInHotel; //available rooms
+	private ArrayList<User> usersOfHotel; //users of hotel
+	private transient ArrayList<ChangeListener> listener = new ArrayList<ChangeListener>(); //changeListener
 
 	/**
 	 * A constructor to construct the hotel for the first time
@@ -103,8 +102,7 @@ public class Hotel implements Serializable {
 	 * @throws ClassNotFoundException - if class is not found
 	 * @throws IOException - the object reading fails
 	 */
-	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException
-	{
+	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
 		in.defaultReadObject();
 		listener = new ArrayList<ChangeListener>();
 	}
