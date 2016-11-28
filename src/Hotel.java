@@ -36,7 +36,6 @@ public class Hotel implements Serializable {
 	 */
 	public Hotel()
 	{
-
 		roomsInHotel = new ArrayList<Room>();
 		usersOfHotel = new ArrayList<User>();
 		reservationList = new ArrayList<Reservation>();

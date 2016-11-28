@@ -5,17 +5,19 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class CalendarMenu
+public class CalendarMenu extends JFrame
 {
-	public static void main(String[] args)
+	private static final int BUTTON_WIDTH=400;
+	private static final int BUTTON_HEIGHT=50;
+	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
+	private static final long serialVersionUID = 1L;
+
+	public CalendarMenu()
 	{
-		final int BUTTON_WIDTH=400;
-		final int BUTTON_HEIGHT=50;
-		Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
-
-		JFrame frame= new JFrame();
-		frame.setSize(500, 500);
-
+		setSize(500, 500);
+		setTitle("Hotel Reservation System");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		JButton guest= new JButton("Guest");
 		guest.setPreferredSize(btnDim);
 
@@ -24,27 +26,37 @@ public class CalendarMenu
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				//GuestLogin f = new GuestLogin();
+				GuestMenu f = new GuestMenu(CalendarMenu.this);
+				f.setVisible(true);
+				CalendarMenu.this.setVisible(false);
 			}
 		});
 
 		JButton manager= new JButton("Manager");
 		manager.setPreferredSize(btnDim);
+		
+		manager.addActionListener(new
+				ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent arg0)
+					{
+						ManagerMenu mm = new ManagerMenu(CalendarMenu.this);
+						mm.setVisible(true);
+						CalendarMenu.this.setVisible(false);
+					}
+				}
+		);
 
-		JLabel label= new JLabel("Guest Or Manager?");
+		JLabel label= new JLabel("Welcome");
 		
 		JPanel btnPanel = new JPanel();
 		btnPanel.add(guest, JPanel.TOP_ALIGNMENT);
 		btnPanel.add(manager, JPanel.BOTTOM_ALIGNMENT);
 		
-		frame.setLayout(new BorderLayout());
-		frame.add(label, BorderLayout.NORTH);
-		frame.add(btnPanel, BorderLayout.CENTER);
-
-		frame.setTitle("Hotel Reservation System");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.pack();
-		frame.setVisible(true);
+		setLayout(new BorderLayout());
+		add(label, BorderLayout.NORTH);
+		add(btnPanel, BorderLayout.CENTER);
 	}
 
 }

@@ -87,5 +87,11 @@ public class SignUpFrame {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	public static void main(String args[])
+	{
+		Hotel h = new Hotel();
+		SignUpFrame test = new SignUpFrame(h);
+	}
 
 }

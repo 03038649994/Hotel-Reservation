@@ -1,12 +1,12 @@
 
-public class HotelReservationSystem {
-
-	public static void main (String[] args) {
+public class HotelReservationSystem
+{
+	public static void main (String[] args)
+	{
 		Hotel hotel = new Hotel();
+		hotel.addUser(new User(0, "Bob", "Jones"));
 		
-		hotel.addUser(new Manager(0, "manager", "manager"));
-		
-		//method to start the GUI
-	
+		CalendarMenu cm = new CalendarMenu();
+		cm.setVisible(true);
 	}
 }
