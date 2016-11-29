@@ -45,7 +45,7 @@ public class SimpleReceiptFormat implements ReceiptFormatter {
 				Reservation temp = iter2.next();
 				if(temp.getTransactionID() == transID) {
 					 receipt+=("Room #" + r.getRoomNumber() + '\n');
-					 totalOfTrans += r.getRoomCost() * (temp.getEndDate().getTime() - temp.getStartDate().getTime()) / (1000 * 60 * 60 * 24);
+					 totalOfTrans += r.getRoomCost() * (temp.getEndDate().getTimeInMillis() - temp.getStartDate().getTimeInMillis()) / (1000 * 60 * 60 * 24);
 				}
 			}
 		}		

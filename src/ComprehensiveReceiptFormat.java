@@ -41,7 +41,7 @@ public class ComprehensiveReceiptFormat implements ReceiptFormatter {
 				Reservation temp = iter2.next();
 				receipt += temp.toString() + "\n";
 				
-				total += r.getRoomCost() * (temp.getEndDate().getTime() - temp.getStartDate().getTime()) / (1000 * 60 * 60 * 24);
+				total += r.getRoomCost() * (temp.getEndDate().getTimeInMillis() - temp.getStartDate().getTimeInMillis()) / (1000 * 60 * 60 * 24);
 			}
 		}
 		return receipt += "The total amount due is: " + total;
