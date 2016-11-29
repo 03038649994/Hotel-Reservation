@@ -1,5 +1,7 @@
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * A class representing a room for the hotel management system
@@ -12,7 +14,7 @@ public class Room implements Serializable {
 	//instance variables for a room
 	private int cost;
 	private int roomNumber;
-	//private Reservations
+	private Hotel reservationHotel;
 
 	/**
 	 * A constructor to construct a room
@@ -58,14 +60,50 @@ public class Room implements Serializable {
 		return cost == whatType;
 	}
 	
+	/**
+	 * A method to check if a room is available
+	 * @param startingDate - the starting date to check
+	 * @param endingDate - the ending date to check
+	 * @return true if room is available; false otherwise
+	 */
 	public boolean isAvailable(Calendar startingDate, Calendar endingDate) {
 		
-		//Iterator to loop over reservations
+		Iterator<Reservation> iter = reservationHotel.reservationIterator();
+		while (iter.hasNext()) {
+			Reservation temp = iter.next();
+			Date startDate = temp.getStartDate();
+			Date endDate = temp.getEndDate();
+			
+			if( ((startDate.after(startingDate.getTime()) || startDate.equals(startingDate.getTime())) && 
+					(startDate.before(endingDate.getTime())) || startDate.equals(endingDate.getTime())) || 
+					((endDate.after(startingDate.getTime()) || endDate.equals(startingDate.getTime())) && 
+					(endDate.before(endingDate.getTime()) || endDate.equals(endingDate.getTime())))) {
+				
+				return false;
+				
+			}
+		}
 		
 		return true;
 		
 	}
 	
-	//METHODS FOR getReservation, addReservation, cancelReservation
+	/**
+	 * A method to get the reservations from the hotel
+	 * @return an iterator that loops over the reservations
+	 */
+	public Iterator<Reservation> getReservations() {
+		return reservationHotel.reservationIterator();
+	}
+	
+	/**
+	 * An overloaded method to get reservations from hotel
+	 * by userID
+	 * @param iD - the ID to check by
+	 * @return an iterator that loops over the reservations
+	 */
+	public Iterator<Reservation> getReservationByUser(int iD) {
+		return reservationHotel.reservationIterator(iD);
+	}
 	
 }

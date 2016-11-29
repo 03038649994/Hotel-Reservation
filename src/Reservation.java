@@ -113,6 +113,4 @@ public class Reservation implements Serializable, Comparable<Reservation>
 			return 1;
 		}
 	}
-
-
 }
