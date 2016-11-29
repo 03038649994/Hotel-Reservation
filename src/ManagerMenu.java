@@ -16,7 +16,7 @@ public class ManagerMenu extends JFrame
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final long serialVersionUID = 1L;
 
-	public ManagerMenu(JFrame parent)
+	public ManagerMenu(Hotel h, JFrame parent)
 	{
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
@@ -42,7 +42,10 @@ public class ManagerMenu extends JFrame
 					@Override
 					public void actionPerformed(ActionEvent arg0)
 					{
-						
+						ManagerView m = new ManagerView(h, ManagerMenu.this);
+						m.setLocation(ManagerMenu.this.getLocation());
+						m.setVisible(true);
+						ManagerMenu.this.setVisible(false);
 					}
 				}
 		);
@@ -84,6 +87,7 @@ public class ManagerMenu extends JFrame
 					@Override
 					public void actionPerformed(ActionEvent arg0)
 					{
+						parent.setLocation(ManagerMenu.this.getLocation());
 						parent.setVisible(true);
 						ManagerMenu.this.dispose();
 					}

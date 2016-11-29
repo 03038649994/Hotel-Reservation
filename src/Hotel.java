@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import javax.swing.event.ChangeEvent;
@@ -24,12 +25,15 @@ import javax.swing.event.ChangeListener;
 public class Hotel implements Serializable {
 
 	//instance variables for a Hotel
-
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Room> roomsInHotel; //total number of rooms
 	private ArrayList<User> usersOfHotel; //users of hotel
 	private ArrayList<Reservation> reservationList;
-
-	private transient ArrayList<ChangeListener> listener = new ArrayList<ChangeListener>(); //changeListener
+	
+	private Calendar selectedDate;
+	private Room selectedRoom;
+	
+	private transient ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>(); //changeListener
 
 	/**
 	 * A constructor to construct the hotel for the first time
@@ -47,6 +51,7 @@ public class Hotel implements Serializable {
 		for(int i = 10; i < 20; i++){
 			roomsInHotel.add(new Room(i, 200)); //new Reservations() ));
 		}
+		selectedDate = new GregorianCalendar();
 	}
 	/** TODO: implement serialization
 	 * A method to save the entire hotel object to an .ser file.
@@ -80,12 +85,10 @@ public class Hotel implements Serializable {
 		}
 	}
 	/**
-	 * A method to get an iterator for the rooms in the hotel
-	 * @return an iterator for the rooms
+	 * Gets the currently selected date for the MonthView
+	 * @return a calendar representing the selected date
 	 */
-	public Iterator<Room> roomIterator() {
-		return roomsInHotel.iterator();
-	}
+	
 	/*---------------------------------------------------
 	 * 
 	 * Getters
@@ -93,9 +96,52 @@ public class Hotel implements Serializable {
 	 * ---------------------------------------------------
 	 */
 	/**
+	 * returns the entire selected date only for the MonthLabel and MonthGrid classes
+	 * @return the selected date
+	 */
+	public Calendar getSelectedDate(){return selectedDate;}
+	/**
+	 * Gets the selected day for the month view
+	 * @return an integer representing the day of month
+	 */
+	public int getSelectedDay(){return selectedDate.get(Calendar.DATE);}
+	/**
+	 * Finds the first day of the month, Sunday = 0
+	 * Used in the MonthGrid class
+	 * @return an integer representing the day
+	 */
+	public int getFirstDay()
+	{
+		GregorianCalendar temp = new GregorianCalendar(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), 0);
+		if(temp.get(Calendar.DAY_OF_WEEK) < 7) return temp.get(Calendar.DAY_OF_WEEK);
+		return 0;
+	}
+	/**
+	 * Finds the last day of the month (30, 31, 28)
+	 * @return the numerical last day of the month
+	 */
+	public int getLastDay()
+	{
+		if(selectedDate.get(Calendar.MONTH) < 7 && selectedDate.get(Calendar.MONTH) != 1) return (selectedDate.get(Calendar.MONTH)%2==0) ? 31 : 30;
+		else if(selectedDate.get(Calendar.MONTH) >= 7) return (selectedDate.get(Calendar.MONTH)%2==0) ? 30 : 31; //needs: leap years
+		return 28;
+	}
+	/**
+	 * Gets the currently selected room for the RoomView
+	 * @return the selected room
+	 */
+	public Room getSelectedRoom(){return selectedRoom;}
+	
+	/**
+	 * Gets an iterator for all the rooms
+	 * @return iterator for rooms
+	 */
+	public Iterator<Room> roomIterator() {return roomsInHotel.iterator();}
+	/**
 	 * A method to get the rooms 
 	 * @return roomsInHotel - the arrayList of rooms
 	 */
+	
 	public ArrayList<Room> getRooms() {
 		return roomsInHotel;
 	}
@@ -138,7 +184,7 @@ public class Hotel implements Serializable {
 	 * @param d the end date to check against
 	 * @return an iterator for reservations under the same date
 	 */
-	public Iterator<Reservation> reservationIterator (Date s, Date e) {
+	public Iterator<Reservation> reservationIterator (Calendar s, Calendar e) {
 		ArrayList<Reservation> sameDate = new ArrayList<Reservation>();
 
 		for(Reservation r : reservationList)
@@ -154,7 +200,7 @@ public class Hotel implements Serializable {
 	 * @param e the end date of the sought reservation
 	 * @return a list of rooms without reservations between the dates
 	 */
-	public ArrayList<Room> getAvailableRooms(Date s, Date e) {
+	public ArrayList<Room> getAvailableRooms(Calendar s, Calendar e) {
 		ArrayList<Room> available = new ArrayList<Room>();
 		for(Room room : roomsInHotel)
 		{
@@ -169,52 +215,86 @@ public class Hotel implements Serializable {
 	 * 
 	 * ---------------------------------------------------
 	 */
-
+	/**
+	 * called by mutators of this model to inform all views of state changes
+	 */
+	private void update()
+	{
+		for(ChangeListener c: listeners)
+		{
+			c.stateChanged(new ChangeEvent(this));
+		}
+	}
+	/**
+	 * This scrolls the selected date back by 1 year
+	 * PRECONDITION: ??
+	 * POSTCONDITION: ??
+	 */
+	public void yesteryear(){selectedDate.add(Calendar.YEAR, -1); update();}
+	/**
+	 * This scrolls the selected date back by 1 month
+	 * PRE: ??
+	 * POST: ??
+	 */
+	public void yestermonth(){selectedDate.add(Calendar.MONTH, -1); update();}
+	/**
+	 * This scrolls the selected date forth by 1 year
+	 * PRECONDITION: ??
+	 * POSTCONDITION: ??
+	 */
+	public void nextYear(){selectedDate.add(Calendar.YEAR, 1); update();}
+	/**
+	 * This scrolls the selected date forth by 1 month
+	 * PRECONDITION: ??
+	 * POSTCONDITION: ??
+	 */
+	public void nextMonth(){selectedDate.add(Calendar.MONTH, 1); update();}
+	/**
+	 * a method to set the selected date for the month view
+	 * @param day the numerical representation of the day of month
+	 * Precondition: ???
+	 * Postcondition: ???
+	 */
+	public void setSelectedDay(int day){selectedDate.set(Calendar.DATE, day); update();}
+	/**
+	 * a method to set the selected room for the room view
+	 * @param room the chosen room
+	 * Precondition: ???
+	 * Postcondition: ???
+	 */
+	public void setSelectedRoom(Room room){selectedRoom = room; update();}
 	/**
 	 * A method to add a room to the list of rooms
 	 * @param roomToAdd - the room to add
 	 */
-	public void addRoom(Room roomToAdd) {
-		roomsInHotel.add(roomToAdd);
-	}
+	public void addRoom(Room roomToAdd) {roomsInHotel.add(roomToAdd); update();}
 	/**
 	 * A method to add a new user to the arrayList of users
 	 * @param newUser - the new user to add
 	 */
-	public void addUser(User newUser) {
-		usersOfHotel.add(newUser);
-	}
+	public void addUser(User newUser) {usersOfHotel.add(newUser); update();}
 	/**
 	 * A method to add a reservation to the reservationList
 	 * @param reserve - the reservation to add
 	 */
-	public void addReservation(Reservation reserve) {
+	public void addReservation(Reservation reserve)
+	{
 		reservationList.add(reserve); //add to reservationList
-
-		//sort the reservationList by starting date
-		if(reservationList.size() > 1) Collections.sort(reservationList);
-		ChangeEvent e = new ChangeEvent(this);
-		for(ChangeListener c : listener)
-		{
-			c.stateChanged(e);
-		}
+		if(reservationList.size() > 1) Collections.sort(reservationList); //sort the reservationList by starting date
+		update();
 	}
 
 	/**
 	 * A method to remove a reservation from the arrayList
 	 * @param reserve - the reservation to remove
 	 */
-	public void removeReservation(Reservation reserve) {
-		reservationList.remove(reserve);
-	}
+	public void removeReservation(Reservation reserve) {reservationList.remove(reserve); update();}
 
 	/**
 	 * A method to attach a changeListener to the object
 	 * @param changeListener - the listener to attach
 	 */
-	public void attach(ChangeListener changeListener) {
-		listener.add(changeListener);
-	}
+	public void attach(ChangeListener changeListener) {listeners.add(changeListener);}
 
 	/**
 	 * A method to check if a room is available to Reserve
@@ -222,7 +302,7 @@ public class Hotel implements Serializable {
 	 * @param eDate - the ending date
 	 * @param roomType - the type of room to change
 	 */
-	private boolean checkAvailable(Room room, Date sDate, Date eDate)
+	private boolean checkAvailable(Room room, Calendar sDate, Calendar eDate)
 	{
 		Iterator<Reservation> iter = reservationIterator(sDate, eDate);
 
@@ -243,7 +323,7 @@ public class Hotel implements Serializable {
 	 */
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException {
 		in.defaultReadObject();
-		listener = new ArrayList<ChangeListener>();
+		listeners = new ArrayList<ChangeListener>();
 	}
 
 

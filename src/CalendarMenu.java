@@ -12,7 +12,7 @@ public class CalendarMenu extends JFrame
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final long serialVersionUID = 1L;
 
-	public CalendarMenu()
+	public CalendarMenu(Hotel h)
 	{
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
@@ -27,6 +27,7 @@ public class CalendarMenu extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				GuestMenu f = new GuestMenu(CalendarMenu.this);
+				f.setLocation(CalendarMenu.this.getLocation());
 				f.setVisible(true);
 				CalendarMenu.this.setVisible(false);
 			}
@@ -41,7 +42,8 @@ public class CalendarMenu extends JFrame
 					@Override
 					public void actionPerformed(ActionEvent arg0)
 					{
-						ManagerMenu mm = new ManagerMenu(CalendarMenu.this);
+						ManagerMenu mm = new ManagerMenu(h, CalendarMenu.this);
+						mm.setLocation(CalendarMenu.this.getLocation());
 						mm.setVisible(true);
 						CalendarMenu.this.setVisible(false);
 					}

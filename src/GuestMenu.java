@@ -15,6 +15,7 @@ public class GuestMenu extends JFrame
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
+	private static final Dimension textFieldDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT/2);
 	private static final long serialVersionUID = 1L;
 
 	public GuestMenu(JFrame parent)
@@ -31,6 +32,7 @@ public class GuestMenu extends JFrame
 		existancePanel.setLayout(new BoxLayout(existancePanel, BoxLayout.Y_AXIS));
 		JLabel exLabel = new JLabel("Existing User");
 		JTextField idField = new JTextField("ID");
+		idField.setMaximumSize(textFieldDim);
 		JButton signInBtn = new JButton("Sign In");
 
 		signInBtn.addActionListener(new ActionListener()
@@ -53,7 +55,9 @@ public class GuestMenu extends JFrame
 		
 		JLabel firstTimeLabel = new JLabel("For first time users");
 		JTextField nameField = new JTextField("First and last name");
+		nameField.setMaximumSize(textFieldDim);
 		JTextField id2Field = new JTextField("ID");
+		id2Field.setMaximumSize(textFieldDim);
 		
 		JButton signUpBtn = new JButton("Sign Up");
 		
@@ -86,6 +90,7 @@ public class GuestMenu extends JFrame
 					@Override
 					public void actionPerformed(ActionEvent arg0)
 					{
+						parent.setLocation(GuestMenu.this.getLocation());
 						parent.setVisible(true);
 						GuestMenu.this.dispose();
 					}

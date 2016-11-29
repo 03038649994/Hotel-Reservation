@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -7,11 +8,11 @@ import java.util.Date;
  * @author Karan Bhargava
  * @version 1.2016.991
  */
-public class Reservation implements Serializable, Comparable<Reservation> {
-
+public class Reservation implements Serializable, Comparable<Reservation>
+{
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
-	private Date startDate;
-	private Date endDate;
+	private Calendar startDate;
+	private Calendar endDate;
 	private int userID;
 	private Room room;
 	private int transactionID;
@@ -24,7 +25,8 @@ public class Reservation implements Serializable, Comparable<Reservation> {
 	 * @param iD - the user's ID
 	 * @param userRoom - the Room we're working with
 	 */
-	public Reservation(int transID, Date sDate, Date eDate, int iD, Room userRoom) {
+	public Reservation(int transID, Calendar sDate, Calendar eDate, int iD, Room userRoom)
+	{
 		transactionID = transID;
 		startDate = sDate;
 		endDate = eDate;
@@ -38,7 +40,8 @@ public class Reservation implements Serializable, Comparable<Reservation> {
 	 * @param eDate - the end date
 	 * @param iD - the ID of the user
 	 */
-	public Reservation(Date sDate, Date eDate, int iD) {
+	public Reservation(Calendar sDate, Calendar eDate, int iD)
+	{
 		startDate = sDate;
 		endDate = eDate;
 		userID = iD;
@@ -72,7 +75,7 @@ public class Reservation implements Serializable, Comparable<Reservation> {
 	 * A getter method to get the starting date of the reservation
 	 * @return startDate - the starting date
 	 */
-	public Date getStartDate() {
+	public Calendar getStartDate() {
 		return startDate;
 	}
 
@@ -80,7 +83,7 @@ public class Reservation implements Serializable, Comparable<Reservation> {
 	 * A getter method to get the ending date of the reservation
 	 * @return endDate - the ending date
 	 */
-	public Date getEndDate() {
+	public Calendar getEndDate() {
 		return endDate;
 	}
 
