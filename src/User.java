@@ -6,8 +6,9 @@ import java.io.Serializable;
  * @version 1.2016.991
  *
  */
-public class User implements Serializable {
-	
+public class User implements Serializable
+{	
+	private static final long serialVersionUID = 1L;
 	private int userID;
 	private String userName;
 	private String userPassword;

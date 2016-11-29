@@ -19,7 +19,8 @@ import javax.swing.SwingConstants;
  * @version 1.2016.991
  *
  */
-public class SignUpFrame {
+public class SignUpFrame
+{
 
 	private Hotel h;
 
@@ -87,11 +88,4 @@ public class SignUpFrame {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
-	public static void main(String args[])
-	{
-		Hotel h = new Hotel();
-		SignUpFrame test = new SignUpFrame(h);
-	}
-
 }

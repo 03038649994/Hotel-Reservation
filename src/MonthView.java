@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -32,12 +31,11 @@ public class MonthView extends JPanel
 
 	private static class MonthPanel extends JPanel
 	{
-		private Hotel h;
+		private static final long serialVersionUID = 1L;
 		public MonthPanel(Hotel h)
 		{
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			setMaximumSize(new Dimension(210, 200));
-			this.h = h;
 
 			ButtonController buttonController = new ButtonController(h);
 			add(buttonController);
@@ -57,6 +55,8 @@ public class MonthView extends JPanel
 		 */
 		public static class ButtonController extends JPanel
 		{
+			private static final long serialVersionUID = 1L;
+
 			public ButtonController(Hotel h)
 			{
 				setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -105,16 +105,20 @@ public class MonthView extends JPanel
 		public static class MonthLabel extends JLabel implements ChangeListener
 		{
 			private static final long serialVersionUID = 1L;
+			enum MONTHS
+			{
+				January, February, March, April, May, June, July, August, September, October, November, December;
+			}
 			private Hotel h;
 			public MonthLabel(Hotel h)
 			{
 				this.h = h;
-				setText(h.getSelectedDate().get(Calendar.DATE) + "/" + (h.getSelectedDate().get(Calendar.MONTH)+1) + "/" + h.getSelectedDate().get(Calendar.YEAR));
+				setText(h.getSelectedDate().get(Calendar.DATE) + " " + MONTHS.values()[(h.getSelectedDate().get(Calendar.MONTH))] + " " + h.getSelectedDate().get(Calendar.YEAR));
 			}
 			@Override
 			public void stateChanged(ChangeEvent e)
 			{
-				setText(h.getSelectedDate().get(Calendar.DATE) + "/" + (h.getSelectedDate().get(Calendar.MONTH)+1) + "/" + h.getSelectedDate().get(Calendar.YEAR));
+				setText(h.getSelectedDate().get(Calendar.DATE) + " " + MONTHS.values()[(h.getSelectedDate().get(Calendar.MONTH))] + " " + h.getSelectedDate().get(Calendar.YEAR));
 				repaint();
 			}
 
@@ -129,10 +133,6 @@ public class MonthView extends JPanel
 			private SelectableViewController[] SVCs;
 			private int firstDay;
 			private int lastDay;
-			enum MONTHS
-			{
-				January, February, March, April, May, June, July, August, September, October, November, December;
-			}
 
 			enum DAYS
 			{
@@ -251,13 +251,12 @@ public class MonthView extends JPanel
 			{
 				private boolean select;
 				public boolean getSelect(){return select;}
-				public void select(){select = !select;}
 				public void select(boolean truth){select = truth;}
 			}
 			public static class DayBlock extends Selectable implements Serializable
 			{
+				private static final long serialVersionUID = 1L;
 				private String symb;
-				private float height;
 				public DayBlock(String symb, boolean select)
 				{
 					this.symb = symb;

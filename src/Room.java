@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -9,8 +8,9 @@ import java.util.Iterator;
  * @version 1.2016.991
  *
  */
-public class Room implements Serializable {
-
+public class Room implements Serializable
+{
+	private static final long serialVersionUID = 1L;
 	//instance variables for a room
 	private int cost;
 	private int roomNumber;
@@ -71,8 +71,8 @@ public class Room implements Serializable {
 		Iterator<Reservation> iter = reservationHotel.reservationIterator();
 		while (iter.hasNext()) {
 			Reservation temp = iter.next();
-			Date startDate = temp.getStartDate();
-			Date endDate = temp.getEndDate();
+			Calendar startDate = temp.getStartDate();
+			Calendar endDate = temp.getEndDate();
 			
 			if( ((startDate.after(startingDate.getTime()) || startDate.equals(startingDate.getTime())) && 
 					(startDate.before(endingDate.getTime())) || startDate.equals(endingDate.getTime())) || 
@@ -80,12 +80,9 @@ public class Room implements Serializable {
 					(endDate.before(endingDate.getTime()) || endDate.equals(endingDate.getTime())))) {
 				
 				return false;
-				
 			}
 		}
-		
 		return true;
-		
 	}
 	
 	/**

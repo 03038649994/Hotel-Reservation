@@ -1,7 +1,6 @@
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A class representing an arrayList form for a reservation
@@ -10,6 +9,7 @@ import java.util.Date;
  */
 public class Reservation implements Serializable, Comparable<Reservation>
 {
+	private static final long serialVersionUID = 1L;
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
 	private Calendar startDate;
 	private Calendar endDate;
