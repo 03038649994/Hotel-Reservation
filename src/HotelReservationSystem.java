@@ -11,7 +11,7 @@ public class HotelReservationSystem
 		day2.add(Calendar.DATE, 1);
 		
 		hotel.addReservation(new Reservation(0, new GregorianCalendar(), day2, 0, hotel.getRooms().get(0)));
-		CalendarMenu cm = new CalendarMenu(hotel);
+		StartMenu cm = new StartMenu(hotel);
 		cm.setVisible(true);
 	}
 }
