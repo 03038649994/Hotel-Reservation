@@ -4,23 +4,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-/** 
- * Start menu GUI to switch between manager
- * and guest interfaces.
- * The very beginning of the program
- */
-public class StartMenu extends JFrame
+
+public class CalendarMenu extends JFrame
 {
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * creates the GUI start menu interface and initializes all the components.
-	 * @param h Hotel object to navigate through the interface
-	 */
-	public StartMenu(Hotel h)
+
+	public CalendarMenu(Hotel h)
 	{
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
@@ -34,10 +26,10 @@ public class StartMenu extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				GuestMenu f = new GuestMenu(StartMenu.this);
-				f.setLocation(StartMenu.this.getLocation());
+				GuestMenu f = new GuestMenu(CalendarMenu.this);
+				f.setLocation(CalendarMenu.this.getLocation());
 				f.setVisible(true);
-				StartMenu.this.setVisible(false);
+				CalendarMenu.this.setVisible(false);
 			}
 		});
 
@@ -50,10 +42,10 @@ public class StartMenu extends JFrame
 					@Override
 					public void actionPerformed(ActionEvent arg0)
 					{
-						ManagerMenu mm = new ManagerMenu(h, StartMenu.this);
-						mm.setLocation(StartMenu.this.getLocation());
+						ManagerMenu mm = new ManagerMenu(h, CalendarMenu.this);
+						mm.setLocation(CalendarMenu.this.getLocation());
 						mm.setVisible(true);
-						StartMenu.this.setVisible(false);
+						CalendarMenu.this.setVisible(false);
 					}
 				}
 		);
