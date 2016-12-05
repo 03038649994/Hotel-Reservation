@@ -35,7 +35,7 @@ public class MonthView extends JPanel
 		public MonthPanel(Hotel h)
 		{
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			setMaximumSize(new Dimension(210, 200));
+			setMaximumSize(new Dimension(320, 200));
 
 			ButtonController buttonController = new ButtonController(h);
 			add(buttonController);
