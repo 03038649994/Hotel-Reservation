@@ -34,7 +34,7 @@ public class StartMenu extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				GuestMenu f = new GuestMenu(StartMenu.this);
+				GuestMenu f = new GuestMenu(StartMenu.this, h);
 				f.setLocation(StartMenu.this.getLocation());
 				f.setVisible(true);
 				StartMenu.this.setVisible(false);

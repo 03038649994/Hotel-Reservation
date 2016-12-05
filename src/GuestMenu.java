@@ -17,9 +17,11 @@ public class GuestMenu extends JFrame
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final Dimension textFieldDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT/2);
 	private static final long serialVersionUID = 1L;
+	private Hotel hotel;
 
-	public GuestMenu(JFrame parent)
+	public GuestMenu(JFrame parent, Hotel h)
 	{
+		hotel = h;
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());

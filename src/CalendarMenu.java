@@ -26,7 +26,7 @@ public class CalendarMenu extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				GuestMenu f = new GuestMenu(CalendarMenu.this);
+				GuestMenu f = new GuestMenu(CalendarMenu.this, h);
 				f.setLocation(CalendarMenu.this.getLocation());
 				f.setVisible(true);
 				CalendarMenu.this.setVisible(false);
