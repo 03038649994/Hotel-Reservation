@@ -28,10 +28,10 @@ public class Hotel implements Serializable {
 	private ArrayList<Room> roomsInHotel; //total number of rooms
 	private ArrayList<User> usersOfHotel; //users of hotel
 	private ArrayList<Reservation> reservationList;
-	
+
 	private Calendar selectedDate;
 	private Room selectedRoom;
-	
+
 	private transient ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>(); //changeListener
 
 	/**
@@ -87,7 +87,7 @@ public class Hotel implements Serializable {
 	 * Gets the currently selected date for the MonthView
 	 * @return a calendar representing the selected date
 	 */
-	
+
 	/*---------------------------------------------------
 	 * 
 	 * Getters
@@ -95,7 +95,7 @@ public class Hotel implements Serializable {
 	 * ---------------------------------------------------
 	 */
 	/**
-	 * returns the entire selected date only for the MonthLabel and MonthGrid classes
+	 * returns the entire selected date
 	 * @return the selected date
 	 */
 	public Calendar getSelectedDate(){return selectedDate;}
@@ -130,7 +130,7 @@ public class Hotel implements Serializable {
 	 * @return the selected room
 	 */
 	public Room getSelectedRoom(){return selectedRoom;}
-	
+
 	/**
 	 * Gets an iterator for all the rooms
 	 * @return iterator for rooms
@@ -140,7 +140,7 @@ public class Hotel implements Serializable {
 	 * A method to get the rooms 
 	 * @return roomsInHotel - the arrayList of rooms
 	 */
-	
+
 	public ArrayList<Room> getRooms() {
 		return roomsInHotel;
 	}
@@ -178,6 +178,27 @@ public class Hotel implements Serializable {
 		return reservesUnderSameID.iterator();
 	}
 	/**
+	 * A method to get an iterator for reservations that contain the date s
+	 * @param s the single date to check against
+	 * @return an iterator for reservations under the same date
+	 */
+	public Iterator<Reservation> reservationIterator(Calendar s)
+	{
+		ArrayList<Reservation> sameDate = new ArrayList<Reservation>();
+		s.set(Calendar.MILLISECOND, 0);
+
+		for(Reservation r : reservationList)
+		{
+			Calendar start = r.getStartDate();
+			Calendar end = r.getEndDate();
+			start.set(Calendar.MILLISECOND, 0);
+			end.set(Calendar.MILLISECOND, 0);
+
+			if((start.before(s) || start.equals(s)) && (end.after(s) || end.equals(s))) sameDate.add(r);
+		}
+		return sameDate.iterator();
+	}
+	/**
 	 * A method to get an iterator for reservations with dates betwixt s and e
 	 * @param s the start date to check against
 	 * @param d the end date to check against
@@ -188,26 +209,29 @@ public class Hotel implements Serializable {
 
 		for(Reservation r : reservationList)
 		{
-			if(s.before(r.getStartDate()) && e.after(r.getStartDate())) sameDate.add(r);
-			else if(s.before(r.getEndDate()) && e.after(r.getEndDate()))sameDate.add(r);
+			if((s.before(r.getStartDate()) || s.equals(r.getStartDate()))
+					&& (e.after(r.getStartDate()) || e.equals(r.getStartDate())))
+				sameDate.add(r);
+			else if((s.before(r.getEndDate()) || s.equals(r.getEndDate()))
+					&& (e.after(r.getEndDate())) || e.equals(r.getEndDate()))
+				sameDate.add(r);
 		}
 		return sameDate.iterator();
 	}
 	/**
-	 * gets available rooms between dates
-	 * @param s the start date of the sought reservation
-	 * @param e the end date of the sought reservation
+	 * gets available rooms on the date
+	 * @param s the date of the sought reservation
 	 * @return a list of rooms without reservations between the dates
 	 */
-	public ArrayList<Room> getAvailableRooms(Calendar s, Calendar e) {
+	public ArrayList<Room> getAvailableRooms(Calendar s) {
 		ArrayList<Room> available = new ArrayList<Room>();
 		for(Room room : roomsInHotel)
 		{
-			if(checkAvailable(room, s, e)) available.add(room);
+			if(checkAvailable(room, s)) available.add(room);
 		}
 		return available;
 	}
-	
+
 	/*---------------------------------------------------
 	 * 
 	 * Setters
@@ -217,13 +241,7 @@ public class Hotel implements Serializable {
 	/**
 	 * called by mutators of this model to inform all views of state changes
 	 */
-	private void update()
-	{
-		for(ChangeListener c: listeners)
-		{
-			c.stateChanged(new ChangeEvent(this));
-		}
-	}
+	private void update(){for(ChangeListener c: listeners){c.stateChanged(new ChangeEvent(this));}}
 	/**
 	 * This scrolls the selected date back by 1 year
 	 * PRECONDITION: ??
@@ -301,9 +319,9 @@ public class Hotel implements Serializable {
 	 * @param eDate - the ending date
 	 * @param roomType - the type of room to change
 	 */
-	private boolean checkAvailable(Room room, Calendar sDate, Calendar eDate)
+	private boolean checkAvailable(Room room, Calendar sDate)
 	{
-		Iterator<Reservation> iter = reservationIterator(sDate, eDate);
+		Iterator<Reservation> iter = reservationIterator(sDate);
 
 		while(iter.hasNext())
 		{

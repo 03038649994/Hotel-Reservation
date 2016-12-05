@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,7 +10,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,7 +30,7 @@ public class MonthView extends JPanel
 	{
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(new MonthPanel(h));
-		//adds selected room info panel here
+		add(new MonthInfoPanel(h));
 	}
 
 	private static class MonthPanel extends JPanel
@@ -148,7 +152,7 @@ public class MonthView extends JPanel
 				setLayout(new GridLayout(0, 7, 0, 0));
 				this.h = h;
 				h.attach(this);
-				
+
 				SVCs = new SelectableViewController[42];
 				DAYS[] days = DAYS.values();
 
@@ -157,30 +161,30 @@ public class MonthView extends JPanel
 
 				for(int i = 0; i < 7; i++)
 				{
-					add(new SelectableViewController(h, 0, new DayBlock(days[i].toString().substring(0, 1), false)));
+					add(new SelectableViewController(h, -1, new DayBlock(days[i].toString().substring(0, 1), false)));
 				}
 				for(int i = 0; i < firstDay; i++)
 				{
-					SVCs[i] = new SelectableViewController(h, 0, new DayBlock("", false));
+					SVCs[i] = new SelectableViewController(h, 0, new DayBlock(false));
 				}
 				for(int i = firstDay; i < firstDay+lastDay; i++)
 				{
-					SVCs[i] = new SelectableViewController(h, i+1-firstDay, new DayBlock(i+"", i == h.getSelectedDay()));
+					SVCs[i] = new SelectableViewController(h, i+1-firstDay, new DayBlock(i+1-firstDay == h.getSelectedDay()));
 				}
 				for(int i = firstDay+lastDay; i < SVCs.length; i++)
 				{
-					SVCs[i] = new SelectableViewController(h, 0, new DayBlock("", false));
+					SVCs[i] = new SelectableViewController(h, 0, new DayBlock(false));
 				}
 				for(SelectableViewController svc : SVCs){add(svc);}
 			}
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e)
 			{
 				if(firstDay != h.getFirstDay() || lastDay != h.getLastDay())
 				{
 					firstDay = h.getFirstDay(); lastDay = h.getLastDay();
-					
+
 					for(int i = 0; i < firstDay; i++)
 					{
 						SVCs[i].setDay(0);
@@ -195,35 +199,38 @@ public class MonthView extends JPanel
 					}
 				}
 			}
-			
+
 			public class SelectableViewController extends JComponent implements ChangeListener
 			{
 				private static final long serialVersionUID = 1L;
 				private Hotel hotel;
 				private DayBlock selectable;
 				private int day;
-				
 				public SelectableViewController(Hotel h, int day, DayBlock s)
 				{
 					this.hotel = h;
 					this.selectable = s;
 					h.attach(this);
-					this.day = day;
-					addMouseListener(new
-							MouseAdapter()
-							{
-								public void mousePressed(MouseEvent mEvent)
-								{
-									if(day != 0) hotel.setSelectedDay(day);
-								}
-							}
-					);
+					setDay(day);
 				}
-				
+
 				public void setDay(int day)
 				{
 					this.day = day;
-					selectable.setSymb(day==0? "" : day+"");
+					if(this.getMouseListeners().length > 0)
+					{
+						this.removeMouseListener(getMouseListeners()[0]);
+					}
+					this.addMouseListener(
+							new MouseAdapter() //this is constructed and used statically, regardless if day is updated
+							{
+								public void mousePressed(MouseEvent mEvent)
+								{
+									if(day > 0 && day != hotel.getSelectedDay()) hotel.setSelectedDay(day);
+								}
+							});
+					if(day == 0) selectable.setSymb("");
+					else if(day > 0)selectable.setSymb(day+"");
 				}
 				public void paintComponent(Graphics g)
 				{
@@ -257,6 +264,10 @@ public class MonthView extends JPanel
 			{
 				private static final long serialVersionUID = 1L;
 				private String symb;
+				public DayBlock(boolean select)
+				{
+					select(select);
+				}
 				public DayBlock(String symb, boolean select)
 				{
 					this.symb = symb;
@@ -274,6 +285,50 @@ public class MonthView extends JPanel
 					g2.drawString(symb, 10, 20);
 				}
 			}
+		}
+	}
+	private static class MonthInfoPanel extends JPanel implements ChangeListener
+	{
+		private Hotel h;
+		private JPanel availableRooms;
+		private JPanel reservedRooms;
+		public MonthInfoPanel(Hotel h)
+		{
+			this.h = h;
+			h.attach(this);
+			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			setMaximumSize(new Dimension(320, 200));
+			availableRooms = new JPanel();
+			availableRooms.setLayout(new GridLayout(0, 4));
+
+			reservedRooms = new JPanel();
+			reservedRooms.setLayout(new BoxLayout(reservedRooms, BoxLayout.Y_AXIS));
+
+			add(new JLabel("Room Information"));
+			add(new JLabel("Available Rooms:"));
+			add(availableRooms);
+			add(new JLabel("Reserved Rooms:"));
+			add(reservedRooms);
+			stateChanged(new ChangeEvent(this));
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent arg0)
+		{
+			availableRooms.removeAll();
+			ArrayList<Room> rooms = h.getAvailableRooms(h.getSelectedDate());
+			for(Room room : rooms)
+			{
+				availableRooms.add(new JLabel(room.getRoomNumber()+""));
+			}
+			reservedRooms.removeAll();
+			Iterator<Reservation> r = h.reservationIterator(h.getSelectedDate());
+			while(r.hasNext())
+			{
+				Reservation res = r.next();
+				reservedRooms.add(new JLabel("Room " + res.getRoomNumber()+": "+h.findUserByID(res.getID()).getUserName()));
+			}
+			repaint();
 		}
 	}
 }
