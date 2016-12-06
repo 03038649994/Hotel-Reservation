@@ -178,11 +178,39 @@ public class Hotel implements Serializable {
 		return reservesUnderSameID.iterator();
 	}
 	/**
+	 * A method to return an iterator for rooms with multiple reservations
+	 * @param Room the room with sought reservations
+	 * @return an iterator for reservations under same Room
+	 */
+	public Iterator<Reservation> reservationIterator (Room room) {
+
+		ArrayList<Reservation> reserves = new ArrayList<Reservation>();
+
+		for(Reservation r : reservationList)
+		{
+			if(r.getRoomNumber() == room.getRoomNumber())
+			{
+				reserves.add(r);
+			}
+		}
+		return reserves.iterator();
+	}
+	/**
 	 * A method to get an iterator for reservations that contain the date s
 	 * @param s the single date to check against
 	 * @return an iterator for reservations under the same date
 	 */
 	public Iterator<Reservation> reservationIterator(Calendar s)
+	{
+		return reservationIterator(s, null);
+	}
+	/**
+	 * A method to get an iterator for reservations with dates betwixt s and e
+	 * @param s the start date to check against
+	 * @param d the end date to check against
+	 * @return an iterator for reservations under the same date
+	 */
+	public Iterator<Reservation> reservationIterator (Calendar s, Room e)
 	{
 		ArrayList<Reservation> sameDate = new ArrayList<Reservation>();
 		s.set(Calendar.MILLISECOND, 0);
@@ -194,27 +222,11 @@ public class Hotel implements Serializable {
 			start.set(Calendar.MILLISECOND, 0);
 			end.set(Calendar.MILLISECOND, 0);
 
-			if((start.before(s) || start.equals(s)) && (end.after(s) || end.equals(s))) sameDate.add(r);
-		}
-		return sameDate.iterator();
-	}
-	/**
-	 * A method to get an iterator for reservations with dates betwixt s and e
-	 * @param s the start date to check against
-	 * @param d the end date to check against
-	 * @return an iterator for reservations under the same date
-	 */
-	public Iterator<Reservation> reservationIterator (Calendar s, Calendar e) {
-		ArrayList<Reservation> sameDate = new ArrayList<Reservation>();
-
-		for(Reservation r : reservationList)
-		{
-			if((s.before(r.getStartDate()) || s.equals(r.getStartDate()))
-					&& (e.after(r.getStartDate()) || e.equals(r.getStartDate())))
-				sameDate.add(r);
-			else if((s.before(r.getEndDate()) || s.equals(r.getEndDate()))
-					&& (e.after(r.getEndDate())) || e.equals(r.getEndDate()))
-				sameDate.add(r);
+			if((start.before(s) || start.equals(s)) && (end.after(s) || end.equals(s)))
+			{
+				if(e == null) sameDate.add(r);
+				else if(r.getRoomNumber() == e.getRoomNumber()) sameDate.add(r);
+			}
 		}
 		return sameDate.iterator();
 	}
@@ -272,7 +284,12 @@ public class Hotel implements Serializable {
 	 * Precondition: ???
 	 * Postcondition: ???
 	 */
-	public void setSelectedDay(int day){selectedDate.set(Calendar.DATE, day); update();}
+	public void setSelectedDay(int day)
+	{
+		selectedDate.set(Calendar.DATE, day);
+		selectedRoom = null;
+		update();
+	}
 	/**
 	 * a method to set the selected room for the room view
 	 * @param room the chosen room

@@ -37,20 +37,18 @@ public class ManagerView extends JFrame
 					}
 				}
 		);
-		JLabel label = new JLabel("Manager View Menu");
+		JLabel managerLabel = new JLabel("Manager View Menu");
 		
 		JPanel managerPanel = new JPanel();
 		managerPanel.setLayout(new BoxLayout(managerPanel, BoxLayout.Y_AXIS));
 		
-		MonthView monthView = new MonthView(h);
+		JLabel monthLabel = new JLabel("Month View"); JPanel monthView = new MonthView(h);
+		JLabel roomLabel = new JLabel("Room View"); JPanel roomView = new RoomView(h);
 		
-		JPanel roomView = new JPanel();
-		roomView.setLayout(new BoxLayout(roomView, BoxLayout.X_AXIS));
+		managerPanel.add(monthLabel); managerPanel.add(monthView);
+		managerPanel.add(roomLabel); managerPanel.add(roomView);
 		
-		managerPanel.add(monthView);
-		managerPanel.add(roomView);
-		
-		add(label, BorderLayout.NORTH);
+		add(managerLabel, BorderLayout.NORTH);
 		add(managerPanel, BorderLayout.CENTER);
 		add(back, BorderLayout.SOUTH);
 	}

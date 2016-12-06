@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -29,6 +30,7 @@ public class MonthView extends JPanel
 	public MonthView(Hotel h)
 	{
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setMaximumSize(new Dimension(500, 250));
 		add(new MonthPanel(h));
 		add(new MonthInfoPanel(h));
 	}
@@ -38,8 +40,8 @@ public class MonthView extends JPanel
 		private static final long serialVersionUID = 1L;
 		public MonthPanel(Hotel h)
 		{
+			setMaximumSize(new Dimension(220, 250));
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			setMaximumSize(new Dimension(320, 200));
 
 			ButtonController buttonController = new ButtonController(h);
 			add(buttonController);
@@ -150,6 +152,7 @@ public class MonthView extends JPanel
 			public MonthGrid(Hotel h)
 			{
 				setLayout(new GridLayout(0, 7, 0, 0));
+				setMinimumSize(new Dimension(215, 200));
 				this.h = h;
 				h.attach(this);
 
@@ -289,44 +292,37 @@ public class MonthView extends JPanel
 	}
 	private static class MonthInfoPanel extends JPanel implements ChangeListener
 	{
+		private static final long serialVersionUID = 1L;
 		private Hotel h;
-		private JPanel availableRooms;
-		private JPanel reservedRooms;
+		private JTextArea roomInfo;
 		public MonthInfoPanel(Hotel h)
 		{
 			this.h = h;
 			h.attach(this);
+			setMaximumSize(new Dimension(285, 250));
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			setMaximumSize(new Dimension(320, 200));
-			availableRooms = new JPanel();
-			availableRooms.setLayout(new GridLayout(0, 4));
-
-			reservedRooms = new JPanel();
-			reservedRooms.setLayout(new BoxLayout(reservedRooms, BoxLayout.Y_AXIS));
-
-			add(new JLabel("Room Information"));
-			add(new JLabel("Available Rooms:"));
-			add(availableRooms);
-			add(new JLabel("Reserved Rooms:"));
-			add(reservedRooms);
+			roomInfo = new JTextArea(20, 17);
+			roomInfo.setMinimumSize(new Dimension(285, 125));
+			
+			add(roomInfo);
 			stateChanged(new ChangeEvent(this));
 		}
 
 		@Override
 		public void stateChanged(ChangeEvent arg0)
 		{
-			availableRooms.removeAll();
+			roomInfo.setText("Available Rooms:\n");
 			ArrayList<Room> rooms = h.getAvailableRooms(h.getSelectedDate());
 			for(Room room : rooms)
 			{
-				availableRooms.add(new JLabel(room.getRoomNumber()+""));
+				roomInfo.append(room.getRoomNumber()+", ");
 			}
-			reservedRooms.removeAll();
+			roomInfo.append("\nReserved Rooms:\n");
 			Iterator<Reservation> r = h.reservationIterator(h.getSelectedDate());
 			while(r.hasNext())
 			{
 				Reservation res = r.next();
-				reservedRooms.add(new JLabel("Room " + res.getRoomNumber()+": "+h.findUserByID(res.getID()).getUserName()));
+				roomInfo.append("Room " + res.getRoomNumber()+": "+h.findUserByID(res.getID()).getUserName() +"\n");
 			}
 			repaint();
 		}
