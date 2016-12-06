@@ -2,11 +2,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.Iterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -37,12 +40,33 @@ public class GuestMenu extends JFrame
 		idField.setMaximumSize(textFieldDim);
 		JButton signInBtn = new JButton("Sign In");
 
-		signInBtn.addActionListener(new ActionListener()
-		{
+		signInBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				//sign in frame
+			public void actionPerformed(ActionEvent e) {
+				boolean found = false;
+				String id = idField.getText();
+				Iterator<User> people = hotel.userIterator();
+
+				while (people.hasNext()) {
+					User p = people.next();
+					if (p.getUserID() == Integer.parseInt(id)) {
+						found = true;
+						break;
+					}
+				}
+				if (found) {
+					ReservationView r;
+					try {
+						r = new ReservationView(hotel, GuestMenu.this, Integer.parseInt(id));
+						r.setLocation(GuestMenu.this.getLocation());
+						r.setVisible(true);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					JOptionPane.showMessageDialog(new JFrame("User does not exist"), "User does not exist");
+				}
 			}
 		});
 
