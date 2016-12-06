@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -295,16 +296,19 @@ public class MonthView extends JPanel
 		private static final long serialVersionUID = 1L;
 		private Hotel h;
 		private JTextArea roomInfo;
+		private JScrollPane monthViewBar;
 		public MonthInfoPanel(Hotel h)
 		{
 			this.h = h;
 			h.attach(this);
-			setMaximumSize(new Dimension(285, 250));
+			setMaximumSize(new Dimension(300, 250));
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			roomInfo = new JTextArea(20, 17);
 			roomInfo.setMinimumSize(new Dimension(285, 125));
+			monthViewBar = new JScrollPane(roomInfo, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			
-			add(roomInfo);
+			add(monthViewBar);
+			//add(roomInfo);
 			stateChanged(new ChangeEvent(this));
 		}
 
@@ -315,7 +319,11 @@ public class MonthView extends JPanel
 			ArrayList<Room> rooms = h.getAvailableRooms(h.getSelectedDate());
 			for(Room room : rooms)
 			{
-				roomInfo.append(room.getRoomNumber()+", ");
+				if(room.getRoomNumber() != 19) {
+					roomInfo.append(room.getRoomNumber()+", ");
+					} else {
+						roomInfo.append(room.getRoomNumber() + "");
+					}
 			}
 			roomInfo.append("\nReserved Rooms:\n");
 			Iterator<Reservation> r = h.reservationIterator(h.getSelectedDate());
