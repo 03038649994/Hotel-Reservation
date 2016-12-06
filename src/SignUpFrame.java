@@ -25,6 +25,8 @@ public class SignUpFrame
 	private Hotel h;
 
 	SignUpFrame(Hotel hotel) {
+		System.out.println("in the signUpFrame");
+		
 		h = hotel;
 
 		final JFrame frame = new JFrame();

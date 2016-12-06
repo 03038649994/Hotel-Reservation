@@ -22,9 +22,15 @@ public class GuestMenu extends JFrame
 	private static final long serialVersionUID = 1L;
 	private Hotel hotel;
 
+<<<<<<< Updated upstream
 	public GuestMenu(JFrame parent, Hotel h)
 	{
 		hotel = h;
+=======
+	public GuestMenu(Hotel h,JFrame parent)
+	{
+		System.out.println("in the GuestMenu");
+>>>>>>> Stashed changes
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
@@ -93,7 +99,7 @@ public class GuestMenu extends JFrame
 					@Override
 					public void actionPerformed(ActionEvent arg0)
 					{
-						
+						new SignUpFrame(h); 
 					}
 				}
 		);

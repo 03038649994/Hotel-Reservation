@@ -22,6 +22,7 @@ public class StartMenu extends JFrame
 	 */
 	public StartMenu(Hotel h)
 	{
+		System.out.println("in the startMenu");
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,7 +35,11 @@ public class StartMenu extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+<<<<<<< Updated upstream
 				GuestMenu f = new GuestMenu(StartMenu.this, h);
+=======
+				GuestMenu f = new GuestMenu(h,StartMenu.this);
+>>>>>>> Stashed changes
 				f.setLocation(StartMenu.this.getLocation());
 				f.setVisible(true);
 				StartMenu.this.setVisible(false);

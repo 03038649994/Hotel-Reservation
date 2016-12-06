@@ -53,9 +53,24 @@ public class ReservationView extends JFrame {
 		//-----buttons-------
 		btnMKReservations=new JButton("Make Reservation"); 
 		btnMKReservations.setBounds(10,250,150,50);
-		
+		btnMKReservations.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		btnCancelReservations=new JButton("Cancel Reservation");
 		btnCancelReservations.setBounds(200,250,150,50);
+		btnCancelReservations.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		//-------textField input------
 		tfInputDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
@@ -81,7 +96,7 @@ public class ReservationView extends JFrame {
 		slideDate.addChangeListener(new ChangeListener() {
 			
 			@Override
-			public void stateChanged(ChangeEvent e) {
+			public void stateChanged(ChangeEvent e) { //
 				String startDate= tfInputDate.getText();
 				
 				String[] date= startDate.split("/");
