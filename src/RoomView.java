@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -64,6 +65,7 @@ public class RoomView extends JPanel
 			h.attach(this);
 			setMaximumSize(new Dimension(285, 200));
 			roomInfoText = new JTextArea(100, 20);
+			roomInfoText.setLineWrap(true);
 			roomInfoText.setEnabled(false);
 			stateChanged(new ChangeEvent(this));
 			add(roomInfoText);
@@ -74,7 +76,7 @@ public class RoomView extends JPanel
 		{
 			if(h.getSelectedRoom()==null)
 			{
-				roomInfoText.setText("Please choose a room to view details.\n");
+				roomInfoText.setText("Click a room button for details.\n");
 			}
 			else
 			{
@@ -85,7 +87,7 @@ public class RoomView extends JPanel
 				}
 				else
 				{
-					roomInfoText.setText("There are no tennants at this time.");
+					roomInfoText.setText("This room is available.");
 				}
 				while(r.hasNext())
 				{
