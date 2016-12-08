@@ -28,11 +28,11 @@ public class ManagerMenu extends JFrame
 
 	public ManagerMenu(Hotel h, JFrame parent)
 	{
-<<<<<<< Updated upstream
+
 		hotel = h;
-=======
+
 		System.out.println("in the ManagerMenu");
->>>>>>> Stashed changes
+
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 

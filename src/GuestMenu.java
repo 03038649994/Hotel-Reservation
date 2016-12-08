@@ -22,15 +22,14 @@ public class GuestMenu extends JFrame
 	private static final long serialVersionUID = 1L;
 	private Hotel hotel;
 
-<<<<<<< Updated upstream
+
 	public GuestMenu(JFrame parent, Hotel h)
 	{
 		hotel = h;
-=======
+		}
 	public GuestMenu(Hotel h,JFrame parent)
 	{
-		System.out.println("in the GuestMenu");
->>>>>>> Stashed changes
+		
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
@@ -66,6 +65,7 @@ public class GuestMenu extends JFrame
 						r = new ReservationView(hotel, GuestMenu.this, Integer.parseInt(id));
 						r.setLocation(GuestMenu.this.getLocation());
 						r.setVisible(true);
+						GuestMenu.this.setVisible(false);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
