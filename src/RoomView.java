@@ -87,12 +87,15 @@ public class RoomView extends JPanel
 				}
 				else
 				{
-					roomInfoText.setText("This room is available.");
+					if(h.getSelectedRoom().whatType(80)) roomInfoText.setText("This economic room is available.");
+					if(h.getSelectedRoom().whatType(200)) roomInfoText.setText("This luxury room is available.");
 				}
 				while(r.hasNext())
 				{
+					if(h.getSelectedRoom().whatType(80)) roomInfoText.append("\nRoom type: Economic");
+					else if (h.getSelectedRoom().whatType(200)) roomInfoText.append("\nRoom type: Luxury");
 					Reservation res = r.next();
-					roomInfoText.append("Tennant name: "+h.findUserByID(res.getID()).getUserName() +"\n");
+					roomInfoText.append("\nTennant name: "+h.findUserByID(res.getID()).getUserName() +"\n");
 					roomInfoText.append("Tennant ID: "+res.getID() +"\n");
 
 					Calendar start = res.getStartDate(); Calendar end = res.getEndDate();
@@ -103,7 +106,6 @@ public class RoomView extends JPanel
 					roomInfoText.append("Start date: "+month1+"/"+day1+"/"+year1+"\n");
 					roomInfoText.append("End date: "+month2+"/"+day2+"/"+year2+"\n");
 					roomInfoText.append("Duration of stay: "+duration+" "+((duration>1)? "nights" : "night")+"\n");
-					roomInfoText.append("Transaction ID: "+res.getTransactionID() +"\n");
 				}
 			}
 		}
