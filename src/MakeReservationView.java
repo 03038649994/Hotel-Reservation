@@ -49,7 +49,8 @@ public class MakeReservationView extends JFrame {
 		lblEndDate.setBounds(250,30,100,50);
 		
 		lblPickPrice= new JLabel("Pick the type of room");
-		lblPickPrice.setBounds(10, 180, 125, 25);
+//		lblPickPrice.setBounds(10, 180, 125, 25);
+		lblPickPrice.setBounds(10, 180, 200, 25);
 		
 		//-----buttons-------
 		btnMKReservations=new JButton("Make Reservation"); 
@@ -80,7 +81,8 @@ public class MakeReservationView extends JFrame {
 		
 		//-------textField input------
 		tfInputDate = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		tfInputDate.setBounds(10,80,75,25);
+//		tfInputDate.setBounds(10,80,75,25);
+		tfInputDate.setBounds(10, 80, 100, 25);
 		
 		if(startCal.get(Calendar.DAY_OF_MONTH)>10)
 			currentDate=(startCal.get(Calendar.MONTH)+1)+"/"+startCal.get(Calendar.DAY_OF_MONTH)+""+startCal.get(Calendar.YEAR);
@@ -89,7 +91,8 @@ public class MakeReservationView extends JFrame {
 		
 		tfInputDate.setText(currentDate);
 		tfEndDate=new JFormattedTextField();
-		tfEndDate.setBounds(250,80,75,25);
+//		tfEndDate.setBounds(250,80,75,25);
+		tfEndDate.setBounds(250,80,100,25);
 		tfEndDate.setEnabled(false);
 		
 		//--------slider--------

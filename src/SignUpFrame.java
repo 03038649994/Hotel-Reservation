@@ -44,17 +44,12 @@ public class SignUpFrame
 		JPanel centerPanel2 = new JPanel();
 		JPanel centerPanel3 = new JPanel();
 		JLabel idLabel = new JLabel("User ID");
-		JLabel pinLabel = new JLabel("Password");
 		JLabel nameLabel = new JLabel("Name");
 		final JTextField userIDField = new JTextField("1234");
-		final JPasswordField pinField = new JPasswordField("1234");
 		final JTextField nameField = new JTextField("1234");
 
 		centerPanel1.add(idLabel);
 		centerPanel1.add(userIDField);
-
-		centerPanel2.add(pinLabel);
-		centerPanel2.add(pinField);
 
 		centerPanel3.add(nameLabel);
 		centerPanel3.add(nameField);
@@ -72,10 +67,9 @@ public class SignUpFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				int id = Integer.parseInt(userIDField.getText());
-				String pin = new String(pinField.getPassword());
 				String name = nameField.getText();
 
-				User guest = new User(id, name, pin);
+				User guest = new User(id, name);
 				hotel.addUser(guest);
 				frame.dispose();
 
