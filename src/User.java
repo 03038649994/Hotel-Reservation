@@ -11,7 +11,6 @@ public class User implements Serializable
 	private static final long serialVersionUID = 1L;
 	private int userID;
 	private String userName;
-	private String userPassword;
 	
 	/**
 	 * A constructor to construct the users for the hotel
@@ -19,10 +18,9 @@ public class User implements Serializable
 	 * @param name - the name of the passenger
 	 * @param password - the password for the user
 	 */
-	public User(int id, String name, String password) {
+	public User(int id, String name) {
 		userID = id;
 		userName = name;
-		userPassword = password;
 	}
 	
 	/**
@@ -39,25 +37,6 @@ public class User implements Serializable
 	 */
 	public String getUserName() {
 		return userName;
-	}
-	
-	/**
-	 * A getter method to get the password of the passenger
-	 * @return userPassword - the user's password
-	 */
-	public String getUserPassword() {
-		return userPassword;
-	}
-	
-	/**
-	 * A checking mechanism to check if the id and password match
-	 * for a given user
-	 * @param iD - the userID
-	 * @param pass - the password 
-	 * @return true if match. False otherwise
-	 */
-	public boolean authentication(int iD, String pass) {
-		return userID == iD && userPassword.equals(pass);
 	}
 	
 	/**

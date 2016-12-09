@@ -44,11 +44,11 @@ public class Hotel implements Serializable {
 		reservationList = new ArrayList<Reservation>();
 
 		for(int i = 0; i < 10; i++){
-			roomsInHotel.add(new Room(i, 80)); // new Reservations() ));
+			roomsInHotel.add(new Room(i, 80));
 		}
 
 		for(int i = 10; i < 20; i++){
-			roomsInHotel.add(new Room(i, 200)); //new Reservations() ));
+			roomsInHotel.add(new Room(i, 200));
 		}
 		selectedDate = new GregorianCalendar();
 	}
@@ -378,20 +378,4 @@ public class Hotel implements Serializable {
 
 		return null;
 	}
-
-	/**
-	 * A method to authenticate a user with their ID and Password
-	 * @param iD - the user's ID
-	 * @param pass - the user's password
-	 * @return true if user is found; false otherwise
-	 */
-	public boolean authenticate(int iD, String pass) {
-		User checkUser = findUserByID(iD);
-		if (checkUser != null) {
-			return checkUser.getUserPassword().equals(pass);
-		} 
-		return false;
-	}
-
-	//Methods for reservations (getReservations, cancelReservations, 
 }

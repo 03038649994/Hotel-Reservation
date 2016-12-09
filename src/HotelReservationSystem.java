@@ -6,10 +6,10 @@ public class HotelReservationSystem
 	public static void main (String[] args)
 	{
 		Hotel hotel = new Hotel();
-		hotel.addUser(new User(0, "Bob", "Jones"));
-		hotel.addUser(new User(1, "Mary", "Todd"));
-		hotel.addUser(new User(2, "Samurai", "Jack"));
-		hotel.addUser(new User(3, "Wu", "Zetian"));
+		hotel.addUser(new User(0, "Bob"));
+		hotel.addUser(new User(1, "Mary"));
+		hotel.addUser(new User(2, "Samurai"));
+		hotel.addUser(new User(3, "Wu"));
 		
 		Calendar day1 = new GregorianCalendar();
 		Calendar day2 = new GregorianCalendar(); day2.add(Calendar.DATE, 1);
