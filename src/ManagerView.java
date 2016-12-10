@@ -18,10 +18,8 @@ public class ManagerView extends JFrame
 	
 	public ManagerView(Hotel h, JFrame parent)
 	{
-
-		System.out.println("In the ManagerView");
-		setSize(500, 500);
-		setSize(600, 600);
+		setSize(500, 600);
+		setResizable(false);
 
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());

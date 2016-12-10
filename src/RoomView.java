@@ -8,12 +8,8 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -39,7 +35,7 @@ public class RoomView extends JPanel
 			List<Room> rooms = h.getRooms();
 			for(Room room : rooms)
 			{
-				JButton roomBtn = new JButton("Room "+room.getRoomNumber());
+				JButton roomBtn = new JButton("R"+room.getRoomNumber());
 				roomBtn.addActionListener(new
 						ActionListener()
 				{

@@ -17,6 +17,7 @@ public class CalendarMenu extends JFrame
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		
 		JButton guest= new JButton("Guest");
 		guest.setPreferredSize(btnDim);

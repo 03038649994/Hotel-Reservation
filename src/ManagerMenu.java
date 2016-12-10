@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Calendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,12 +29,10 @@ public class ManagerMenu extends JFrame
 	{
 
 		hotel = h;
-
-		System.out.println("in the ManagerMenu");
-
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
-
+		setResizable(false);
+		
 		JButton loadBtn = new JButton("Load Existing Reservation");
 		loadBtn.setPreferredSize(btnDim);
 

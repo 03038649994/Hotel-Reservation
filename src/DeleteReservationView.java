@@ -1,9 +1,6 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.format.ResolverStyle;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 
 import javax.swing.*;
@@ -17,8 +14,9 @@ import javax.swing.*;
  *hotel object.
  */
 
-public class DeleteReservationView extends JFrame{
-	
+public class DeleteReservationView extends JFrame
+{	
+	private static final long serialVersionUID = 1L;
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
