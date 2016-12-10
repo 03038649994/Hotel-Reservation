@@ -85,22 +85,4 @@ public class Room implements Serializable
 		return true;
 	}
 	
-	/**
-	 * A method to get the reservations from the hotel
-	 * @return an iterator that loops over the reservations
-	 */
-	public Iterator<Reservation> getReservations() {
-		return reservationHotel.reservationIterator();
-	}
-	
-	/**
-	 * An overloaded method to get reservations from hotel
-	 * by userID
-	 * @param iD - the ID to check by
-	 * @return an iterator that loops over the reservations
-	 */
-	public Iterator<Reservation> getReservationByUser(int iD) {
-		return reservationHotel.reservationIterator(iD);
-	}
-	
 }

@@ -33,7 +33,9 @@ public class Hotel implements Serializable {
 	private Room selectedRoom;
 	private User selectedUser; //the logged in user for Guest View
 	private int selectedRoomType; //80 is econ, 200 is lux
-
+	
+	private ArrayList<Reservation> mostRecentRes;
+	
 	private transient ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>(); //changeListener
 
 	/**
@@ -44,6 +46,7 @@ public class Hotel implements Serializable {
 		roomsInHotel = new ArrayList<Room>();
 		usersOfHotel = new ArrayList<User>();
 		reservationList = new ArrayList<Reservation>();
+		mostRecentRes = new ArrayList<Reservation>();
 
 		for(int i = 0; i < 10; i++){
 			roomsInHotel.add(new Room(i, 80));
@@ -96,6 +99,11 @@ public class Hotel implements Serializable {
 	 * 
 	 * ---------------------------------------------------
 	 */
+	/**
+	 * Finds the most recently added reservation
+	 * @return a reservation
+	 */
+	public ArrayList<Reservation> getMostRecentReservations(){return mostRecentRes;}
 	/**
 	 * Finds the cost of the room type sought on the MakeReservation view
 	 * @return the cost, 80 = econ, 200 = lux
@@ -428,11 +436,15 @@ public class Hotel implements Serializable {
 	 */
 	public void addReservation(Reservation reserve)
 	{
+		mostRecentRes.add(reserve);
 		reservationList.add(reserve); //add to reservationList
 		if(reservationList.size() > 1) Collections.sort(reservationList); //sort the reservationList by starting date
 		update();
 	}
-
+	/**
+	 * a method to clear the buffer of recent reservations
+	 */
+	public void flushRecentRes(){mostRecentRes = new ArrayList<Reservation>();}
 	/**
 	 * A method to remove a reservation from the arrayList
 	 * @param reserve - the reservation to remove

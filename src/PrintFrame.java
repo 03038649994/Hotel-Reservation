@@ -21,20 +21,14 @@ import javax.swing.border.Border;
  * @author Karan Bhargava
  * @version 1.2016.991
  */
-public class PrintFrame {
+public class PrintFrame extends JFrame
+{
+	private static final long serialVersionUID = 1L;
 
-	private Hotel hotel;
-	private User user;
-	private int transactionID;
-
-	PrintFrame(Hotel h, User u, int id) {
-		hotel = h;
-		user = u;
-		transactionID = id;
-
-		final JFrame frame = new JFrame();
-		frame.setTitle("Hotel Reservation Receipt Print");
-		frame.setSize(600,400);
+	PrintFrame(Hotel h)
+	{
+		setTitle("Hotel Reservation Receipt Print");
+		setSize(600,400);
 
 		JPanel northPanel = new JPanel();
 		JLabel label = new JLabel("Account information print");
@@ -63,36 +57,34 @@ public class PrintFrame {
 
 		JButton closeBtn = new JButton("Close");
 		bottomPanel.add(closeBtn, BorderLayout.SOUTH);
-		closeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				frame.dispose();
-			}
-		});
-		
-		simpleButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				ReceiptFormatter r = new SimpleReceiptFormat(hotel, user, transactionID);
-				textArea.setText(setFormat(r));
-			}
-		});
-		
-		comprehensiveButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				ReceiptFormatter r = new ComprehensiveReceiptFormat(hotel, user);
-				textArea.setText(setFormat(r));
+		closeBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent event)
+			{
+				PrintFrame.this.dispose();
 			}
 		});
 
+		simpleButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent event)
+			{
+				ReceiptFormatter r = new SimpleReceiptFormat(h);
+				textArea.setText(r.format());
+			}
+		});
 
+		comprehensiveButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent event)
+			{
+				ReceiptFormatter r = new ComprehensiveReceiptFormat(h);
+				textArea.setText(r.format());
+			}
+		});
+		add(northPanel, BorderLayout.NORTH);
+        add(bottomPanel, BorderLayout.CENTER);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setVisible(true);
 	}
-	
-	/**
-	 * A method to set the correct format of the receipt
-	 * @param r - the receipt to format
-	 * @return a string with the correct format
-	 */
-	private String setFormat(ReceiptFormatter r) {
-		return r.format();
-	}
-
 }

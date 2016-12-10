@@ -15,7 +15,6 @@ public class Reservation implements Serializable, Comparable<Reservation>
 	private Calendar endDate;
 	private int userID;
 	private Room room;
-	private int transactionID;
 
 	/**
 	 * A constructor to construct a reservation
@@ -25,9 +24,8 @@ public class Reservation implements Serializable, Comparable<Reservation>
 	 * @param iD - the user's ID
 	 * @param userRoom - the Room we're working with
 	 */
-	public Reservation(int transID, Calendar sDate, Calendar eDate, int iD, Room userRoom)
+	public Reservation(Calendar sDate, Calendar eDate, int iD, Room userRoom)
 	{
-		transactionID = transID;
 		startDate = sDate;
 		endDate = eDate;
 		userID = iD;
@@ -45,14 +43,6 @@ public class Reservation implements Serializable, Comparable<Reservation>
 		startDate = sDate;
 		endDate = eDate;
 		userID = iD;
-	}
-
-	/**
-	 * A getter method to get the transaction ID
-	 * @return transactionID - the transaction ID
-	 */
-	public int getTransactionID() {
-		return transactionID;
 	}
 
 	/**

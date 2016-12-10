@@ -249,14 +249,14 @@ public class MakeReservationView extends JFrame
 						}
 						if(available)
 						{
-							h.addReservation(new Reservation(0, h.getSelectedDate(), h.getSelectedDate2(), h.getSelectedUser().getUserID(), h.getRooms().get(Integer.parseInt(tfRoomNum.getText()))));
-							//NEXT PANEL
+							h.addReservation(new Reservation(h.getSelectedDate(), h.getSelectedDate2(), h.getSelectedUser().getUserID(), h.getRooms().get(Integer.parseInt(tfRoomNum.getText()))));
+							PrintFrame p = new PrintFrame(h);
 						}
 						else JOptionPane.showMessageDialog(new JFrame("Works Not"), "Sorry, this room is not available.");
 					}
 				}
 			});
-			JButton btDone= new JButton("Done");
+			JButton btDone = new JButton("Done");
 			btDone.setBounds(230, 130, 100, 25);
 			btDone.addActionListener(new ActionListener()
 			{

@@ -62,8 +62,10 @@ public class ReservationView extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Auto-generated method stub
-
+				DeleteReservationView r = new DeleteReservationView(h, ReservationView.this);
+				r.setLocation(ReservationView.this.getLocation());
+				r.setVisible(true);
+				ReservationView.this.setVisible(false);
 			}
 		});
 

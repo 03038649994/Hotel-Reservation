@@ -28,7 +28,8 @@ public class DeleteReservationView extends JFrame
 	private JPanel jpView;
 	private Hotel h;
 	
-	public DeleteReservationView(Hotel h, JFrame parent,int iD) {
+	public DeleteReservationView(Hotel h, JFrame parent)
+	{
 		this.h=h;
 		
 		setSize(500, 500);
