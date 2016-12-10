@@ -30,8 +30,11 @@ public class MakeReservationView extends JFrame
 		Calendar c = (Calendar) calendar.clone();
 		int monthShift = c.get(Calendar.MONTH);
 		int yearShift = c.get(Calendar.YEAR);
+		System.out.println(monthShift +" "+ yearShift);
+		
 		while(dayShift > c.getActualMaximum(Calendar.DAY_OF_MONTH)){monthShift++; dayShift -= c.getActualMaximum(Calendar.DAY_OF_MONTH);}
 		while(monthShift > c.getActualMaximum(Calendar.MONTH)){yearShift++; monthShift -= c.getActualMaximum(Calendar.MONTH)+1;}
+		
 		c.set(Calendar.DAY_OF_MONTH, dayShift);
 		c.set(Calendar.MONTH, monthShift);
 		c.set(Calendar.YEAR, yearShift);
@@ -137,7 +140,8 @@ public class MakeReservationView extends JFrame
 			tfInputDate.setBounds(10, 80, 100, 25);
 
 			Calendar startCal = h.getSelectedDate();
-			if(startCal.get(Calendar.DAY_OF_MONTH)>10)
+			
+			if(startCal.get(Calendar.DAY_OF_MONTH)>=10)
 				currentDate=(startCal.get(Calendar.MONTH)+1)+"/"+startCal.get(Calendar.DAY_OF_MONTH)+""+startCal.get(Calendar.YEAR);
 			else
 				currentDate=(startCal.get(Calendar.MONTH)+1)+"/"+"0"+startCal.get(Calendar.DAY_OF_MONTH)+""+startCal.get(Calendar.YEAR);
@@ -152,6 +156,7 @@ public class MakeReservationView extends JFrame
 									Integer.parseInt(tfInputDate.getText().substring(6)),
 									Integer.parseInt(tfInputDate.getText().substring(0, 2)),
 									Integer.parseInt(tfInputDate.getText().substring(3, 5))
+									
 									)
 							);
 
