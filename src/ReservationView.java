@@ -44,6 +44,7 @@ public class ReservationView extends JFrame
 				MakeReservationView r;
 				try
 				{
+					h.flushRecentRes();
 					r = new MakeReservationView(h, ReservationView.this);
 					r.setLocation(ReservationView.this.getLocation());
 					r.setVisible(true);

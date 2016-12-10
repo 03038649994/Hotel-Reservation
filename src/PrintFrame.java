@@ -25,7 +25,7 @@ public class PrintFrame extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
-	PrintFrame(Hotel h)
+	PrintFrame(Hotel h, MakeReservationView parent)
 	{
 		setTitle("Hotel Reservation Receipt Print");
 		setSize(600,400);
@@ -61,6 +61,9 @@ public class PrintFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent event)
 			{
+				parent.getParental().setLocation(PrintFrame.this.getLocation());
+				parent.getParental().setVisible(true);
+				parent.dispose();
 				PrintFrame.this.dispose();
 			}
 		});
@@ -85,6 +88,5 @@ public class PrintFrame extends JFrame
 		add(northPanel, BorderLayout.NORTH);
         add(bottomPanel, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setVisible(true);
 	}
 }

@@ -19,7 +19,12 @@ public class MakeReservationView extends JFrame
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
-
+	private Hotel h;
+	private JFrame parent;
+	public JFrame getParental()
+	{
+		return parent;
+	}
 	public static Calendar shiftCalendar(Calendar calendar, int dayShift)
 	{
 		Calendar c = (Calendar) calendar.clone();
@@ -34,6 +39,8 @@ public class MakeReservationView extends JFrame
 	}
 	public MakeReservationView(Hotel h, JFrame parent) throws ParseException
 	{
+		this.parent = parent;
+		this.h = h;
 		JLabel lblName = new JLabel("Make a Reservation");
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
@@ -43,7 +50,7 @@ public class MakeReservationView extends JFrame
 		JPanel reservePanel = new JPanel();
 		reservePanel.setLayout(new BoxLayout(reservePanel, BoxLayout.Y_AXIS));
 		reservePanel.add(new MakeReservationPanel(h));
-		reservePanel.add(new AvailableReservationView(h));
+		reservePanel.add(new AvailableReservationView(h, this));
 		//-----------Back Button--------------
 		JButton back = new JButton("<");
 		back.setPreferredSize(btnDim);
@@ -64,7 +71,6 @@ public class MakeReservationView extends JFrame
 		add(lblName, BorderLayout.NORTH);
 		add(reservePanel, BorderLayout.CENTER);
 		add(back,BorderLayout.SOUTH);
-
 	}
 
 	public static class EndDateView extends JFormattedTextField implements ChangeListener
@@ -101,10 +107,10 @@ public class MakeReservationView extends JFrame
 			JLabel lblTodaysDate = new JLabel("Starting date");
 			lblTodaysDate.setBounds(10,30,100,50);
 
-			JLabel lblEndDate= new JLabel("Ending date");
+			JLabel lblEndDate = new JLabel("Ending date");
 			lblEndDate.setBounds(250,30,100,50);
 
-			JLabel lblPickPrice= new JLabel("Pick the type of room");
+			JLabel lblPickPrice = new JLabel("Pick the type of room");
 			//		lblPickPrice.setBounds(10, 180, 125, 25);
 			lblPickPrice.setBounds(10, 180, 200, 25);
 
@@ -172,8 +178,8 @@ public class MakeReservationView extends JFrame
 			});
 			JPanel inputPanel = new JPanel(); inputPanel.add(lblTodaysDate); inputPanel.add(tfInputDate);
 			JPanel outputPanel = new JPanel(); outputPanel.add(lblEndDate); outputPanel.add(tfEndDate);
-			add(inputPanel);
-			add(outputPanel);
+			JPanel datePanel = new JPanel();  datePanel.add(inputPanel); datePanel.add(outputPanel);
+			add(datePanel);
 			add(slideDate);
 			add(lblPickPrice);
 			add(CBRoomType);
@@ -187,7 +193,7 @@ public class MakeReservationView extends JFrame
 		{
 			this.h = h;
 			h.attach(this);
-			setBounds(10, 50, 200, 250);
+			setBounds(10, 70, 200, 200);
 			setEditable(false);
 			stateChanged(new ChangeEvent(this));
 		}
@@ -209,8 +215,10 @@ public class MakeReservationView extends JFrame
 	public static class AvailableReservationView extends JPanel
 	{
 		private static final long serialVersionUID = 1L;
-		public AvailableReservationView(Hotel h)
+		private MakeReservationView holder;
+		public AvailableReservationView(Hotel h, MakeReservationView holder)
 		{
+			this.holder = holder;
 			setSize(500, 250);
 			setLayout(new BorderLayout());
 
@@ -220,60 +228,78 @@ public class MakeReservationView extends JFrame
 			lblExplain.setBounds(230, 30, 200, 50);
 
 			//------Panel to view components------
-			JPanel jpView=new JPanel();
+			JPanel jpView = new JPanel();
 			jpView.setLayout(null);
 
 			//--------text field------------------
-			JTextField tfRoomNum= new JTextField();
-			tfRoomNum.setBounds(230, 70, 50, 25);
+			JTextField tfRoomNum = new JTextField();
+			tfRoomNum.setBounds(230, 70, 60, 25);
 
-			//----------Buttons-------------------
-			JButton btConfirm = new JButton("Confirm");
-			btConfirm.setBounds(230, 100, 100, 25);
-			btConfirm.addActionListener( new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					if(h.getSelectedDate().equals(h.getSelectedDate2()))
-					{
-						JOptionPane.showMessageDialog(new JFrame("Works Not"), "Reservations must be at least one night.");
-					}
-					else
-					{
-						ArrayList<Room> rooms = h.getAvailableRooms(h.getSelectedDate(), h.getSelectedDate2(), h.getSelectedRoomType());
-						boolean available = false;
-						for(Room r: rooms)
-						{
-							if(Integer.parseInt(tfRoomNum.getText()) == r.getRoomNumber()) available = true;
-						}
-						if(available)
-						{
-							h.addReservation(new Reservation(h.getSelectedDate(), h.getSelectedDate2(), h.getSelectedUser().getUserID(), h.getRooms().get(Integer.parseInt(tfRoomNum.getText()))));
-							PrintFrame p = new PrintFrame(h);
-						}
-						else JOptionPane.showMessageDialog(new JFrame("Works Not"), "Sorry, this room is not available.");
-					}
-				}
-			});
+			//----------Buttons-------------------]
 			JButton btDone = new JButton("Done");
-			btDone.setBounds(230, 130, 100, 25);
-			btDone.addActionListener(new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					// TODO Auto-generated method stub
+			btDone.setBounds(230, 70, 70, 25);
+			btDone.setVisible(false);
+			
+			JButton btConfirm = new JButton("Confirm");
+			btConfirm.setBounds(300, 70, 150, 25);
 
-				}
-			});
-			JButton btMoreReserv= new JButton("Reserve more rooms");
-			btMoreReserv.setBounds(230, 260, 100, 25);
+			JButton btMoreReserv = new JButton("Reserve More Rooms");
+			btMoreReserv.setBounds(300, 70, 160, 25);
+			btMoreReserv.setVisible(false);
+
+			btConfirm.addActionListener
+			(
+					new ActionListener()
+					{
+						@Override
+						public void actionPerformed(ActionEvent e)
+						{
+							if(h.getSelectedDate().equals(h.getSelectedDate2()))
+							{
+								JOptionPane.showMessageDialog(new JFrame("Works Not"), "Reservations must be at least one night.");
+							}
+							else
+							{
+								ArrayList<Room> rooms = h.getAvailableRooms(h.getSelectedDate(), h.getSelectedDate2(), h.getSelectedRoomType());
+								boolean available = false;
+								for(Room r: rooms)
+								{
+									if(Integer.parseInt(tfRoomNum.getText()) == r.getRoomNumber()) available = true;
+								}
+								if(available)
+								{
+									h.addReservation(new Reservation(h.getSelectedDate(), h.getSelectedDate2(), h.getSelectedUser().getUserID(), h.getRooms().get(Integer.parseInt(tfRoomNum.getText()))));
+									tfRoomNum.setVisible(false);
+									btConfirm.setVisible(false);
+									btMoreReserv.setVisible(true);
+									btDone.setVisible(true);
+								}
+								else JOptionPane.showMessageDialog(new JFrame("Works Not"), "Sorry, this room is not available.");
+							}
+						}
+					});
 			btMoreReserv.addActionListener(new ActionListener()
 			{
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					tfRoomNum.setVisible(true);
+					tfRoomNum.setText("");
+					btConfirm.setVisible(true);
+					btMoreReserv.setVisible(false);
+					btDone.setVisible(false);
+				}
+			});
+
+			btDone.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					PrintFrame p = new PrintFrame(h, holder);
+					p.setLocation(holder.getLocation());
+					p.setVisible(true);
+					holder.setVisible(false);
 				}
 			});
 			//-------TextArea to show available rooms-------
