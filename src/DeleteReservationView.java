@@ -1,9 +1,12 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 
@@ -20,107 +23,113 @@ public class DeleteReservationView extends JFrame
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
-	
-	private JTextArea taDisplayRooms;
+
 	private JTextField tfRoomNum;
-	private JButton btConfrim,btDone;
-	private JLabel lblExplain,lblName;
-	private JPanel jpView;
+	private JButton btConfrim;
+	private JLabel lblExplain;
 	private Hotel h;
-	
+
 	public DeleteReservationView(Hotel h, JFrame parent)
 	{
 		this.h=h;
-		
+
 		setSize(500, 500);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
-		
+
 		//---------labels-----------------------
-		lblName= new JLabel("DELETE A RESERVATION");
-		lblExplain= new JLabel("Enter the room number to delete");
+		JLabel lblName = new JLabel("DELETE A RESERVATION");
+		lblExplain = new JLabel("Enter the index number to delete");
 		lblExplain.setBounds(230, 30, 200, 50);
-		
+
 		//------Panel to view components------
-		jpView=new JPanel();
+		JPanel jpView = new JPanel();
 		jpView.setLayout(null);
-		
+
 		//--------text field------------------
-		tfRoomNum= new JTextField();
+		tfRoomNum = new JTextField();
 		tfRoomNum.setBounds(230, 70, 50, 25);
-			
+
 		//----------Buttons-------------------
-		
-		btConfrim= new JButton("Confirm");
-		btConfrim.setBounds(230, 100, 100, 25);
-		btConfrim.addActionListener( new ActionListener() {
-			
+
+		btConfrim = new JButton("Cancel Reservation");
+		btConfrim.setBounds(230, 100, 200, 25);
+		btConfrim.addActionListener( new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
-			
+			public void actionPerformed(ActionEvent e)
+			{
+				if(tfRoomNum.equals(""))
+				{
+					JOptionPane.showMessageDialog(new JFrame("Works Not"), "Please enter a room number to delete.");
+				}
+				else
+				{
+					Iterator<Reservation> reservations = h.reservationIterator(h.getSelectedUser().getUserID());
+					Reservation r = reservations.next();
+					int counter = 1;
+					while(counter < Integer.parseInt(tfRoomNum.getText())){counter++; r = reservations.next();}
+					h.removeReservation(r);
+				}
 			}
 		});
-		
-		btDone= new JButton("Done");
-		btDone.setBounds(230, 250, 100, 25);
-		btDone.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});		
 		//-------TextArea to show available rooms-------
-		taDisplayRooms= new JTextArea();
+		RoomTextArea displayRooms = new RoomTextArea(h);
+		//displayRooms.setBounds(10, 50, 200, 250);
+		displayRooms.setEditable(false);
+		JScrollPane taDisplayRooms = new JScrollPane(displayRooms);
 		taDisplayRooms.setBounds(10, 50, 200, 250);
-		taDisplayRooms.setEditable(false);
-		
-		jpView.add(btDone);
 		jpView.add(btConfrim);
 		jpView.add(tfRoomNum);
 		jpView.add(lblExplain);
 		jpView.add(taDisplayRooms);
-		
+
 		//-----------Back Button--------------
-				JButton back = new JButton("<");
-				back.setPreferredSize(btnDim);
-				
-				back.addActionListener(new
-						ActionListener()
-						{
-							@Override
-							public void actionPerformed(ActionEvent arg0)
-							{
-								parent.setLocation(DeleteReservationView.this.getLocation());
-								parent.setVisible(true);
-								DeleteReservationView.this.dispose();
-							}
-						}
+		JButton back = new JButton("<");
+		back.setPreferredSize(btnDim);
+
+		back.addActionListener(new
+				ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				parent.setLocation(DeleteReservationView.this.getLocation());
+				parent.setVisible(true);
+				DeleteReservationView.this.dispose();
+			}
+		}
 				);
-				//-----------------------------
-				
-				add(lblName, BorderLayout.NORTH);
-				add(back, BorderLayout.SOUTH);
-				add(jpView, BorderLayout.CENTER);
+		//-----------------------------
+
+		add(lblName, BorderLayout.NORTH);
+		add(back, BorderLayout.SOUTH);
+		add(jpView, BorderLayout.CENTER);
 	}
-	
-	/**
-	 * displays the available rooms on 
-	 * the text Area
-	 * @param cal
-	 * @param roomType
-	 * @param date
-	 */
-	public void displayAvailableRooms( int id){			
-		Iterator<Reservation> rooms=h.reservationIterator(id);
-		
-		taDisplayRooms.setText("Rooms you have reserved\n");
-		
-		while(rooms.hasNext()){
-			Reservation r =rooms.next();
-				taDisplayRooms.append(r.toString()+"\n");
+	public static class RoomTextArea extends JTextArea implements ChangeListener
+	{
+		private static final long serialVersionUID = 1L;
+		private Hotel h;
+		public RoomTextArea(Hotel h)
+		{
+			this.h = h;
+			h.attach(this);
+			setBounds(10, 70, 200, 200);
+			setEditable(false);
+			stateChanged(new ChangeEvent(this));
+		}
+		@Override
+		public void stateChanged(ChangeEvent arg0)
+		{
+			Iterator<Reservation> reservations = h.reservationIterator(h.getSelectedUser().getUserID());
+			setText("Your reservations:\n");
+			int counter = 0;
+			while(reservations.hasNext())
+			{
+				counter++;
+				Reservation r = reservations.next();
+				append(counter + ". " + r.toString()+"\n");
+			}
 		}
 	}
-
 }
