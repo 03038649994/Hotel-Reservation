@@ -8,6 +8,8 @@ import javax.swing.*;
 /**
  * Reservation GUI for guest to find a 
  * type of room between the given dates 
+ * @author Evan Kardos
+ * @version 104.121.21
  */
 public class ReservationView extends JFrame
 {
@@ -15,17 +17,22 @@ public class ReservationView extends JFrame
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
-	
+
 	private JLabel lblName; 
 
+	/**
+	 * A constructor to construct the reservationView
+	 * @param h - the hotel we're working with
+	 * @param parent - the parent frame of the current frame
+	 */
 	public ReservationView(Hotel h, JFrame parent)
 	{
-		setSize(500, 500);
+		setSize(600, 600);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		
+
 		JPanel resViewPanel = new JPanel();
 		resViewPanel.setLayout(new BoxLayout(resViewPanel, BoxLayout.Y_AXIS));
 

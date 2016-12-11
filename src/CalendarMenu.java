@@ -5,20 +5,31 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
+/**
+ * A class representing the starting menu of the system
+ * @author Matthew Binning
+ * @version 0.000.0001
+ */
 public class CalendarMenu extends JFrame
 {
+	//instance variables of the starting menu
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * A constructor to initialize the start menu
+	 * @param h - the hotel we're working with
+	 */
 	public CalendarMenu(Hotel h)
 	{
-		setSize(500, 500);
+		setSize(600, 600);
 		setTitle("Hotel Reservation System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		
+		//buttons of the system
 		JButton guest= new JButton("Guest");
 		guest.setPreferredSize(btnDim);
 

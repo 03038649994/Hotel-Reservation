@@ -25,10 +25,16 @@ public class PrintFrame extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * A constructor to construct the printFrame for the receipts 
+	 * @param h - the hotel we're working with
+	 * @param parent - the parent of the current frame
+	 */
 	PrintFrame(Hotel h, MakeReservationView parent)
 	{
 		setTitle("Hotel Reservation Receipt Print");
-		setSize(600,400);
+		setSize(600,600);
+		setResizable(false);
 
 		JPanel northPanel = new JPanel();
 		JLabel label = new JLabel("Account information print");
@@ -85,6 +91,7 @@ public class PrintFrame extends JFrame
 				textArea.setText(r.format());
 			}
 		});
+		
 		add(northPanel, BorderLayout.NORTH);
         add(bottomPanel, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

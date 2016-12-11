@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,60 +13,90 @@ import java.io.ObjectOutputStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * A class representing all the manager GUI and functions
+ *@author Matthew Binning
+ *@version 11.5818.221
+ *	
+ */
 public class ManagerMenu extends JFrame
 {
+	
+	//instance variables of the manager View
 	private static final int BUTTON_WIDTH=400;
 	private Hotel hotel;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * A constructor to construct the manager's panel
+	 * @param h - the hotel we're working with
+	 * @param parent - the managerView's parent frame
+	 */
 	public ManagerMenu(Hotel h, JFrame parent)
 	{
-
 		hotel = h;
-		setSize(500, 500);
+		setSize(600, 600);
 		setTitle("Hotel Reservation System");
 		setResizable(false);
-		
+
 		JButton loadBtn = new JButton("Load Existing Reservation");
 		loadBtn.setPreferredSize(btnDim);
 
+		
+		//Deserialize the file
 		loadBtn.addActionListener(new ActionListener()
 		{
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				JFileChooser fileChoose = new JFileChooser();
-				fileChoose.setCurrentDirectory(new File(System.getProperty("user.home")));
-				int result = fileChoose.showOpenDialog(ManagerMenu.this);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChoose.getSelectedFile();
-					ObjectInputStream in = null;
+				String fileName = "hotel.ser";
+				File fileIn = new File(fileName);
 
-					try	{
-						in = new ObjectInputStream(new FileInputStream(selectedFile));
-						hotel = (Hotel) in.readObject();
-						in.close();
-					} catch (IOException exception)
-					{
-						JOptionPane.showMessageDialog(null, exception + "io");
-					}
-					catch (ClassNotFoundException exception)
-					{
-						JOptionPane.showMessageDialog(null, exception + "class");
+				if(fileIn.exists()) {
+					try {
+						FileInputStream fileInput = new FileInputStream(fileIn);
+						ObjectInputStream objIn = new ObjectInputStream(fileInput);
+
+						hotel = (Hotel) objIn.readObject();
+						objIn.close();
+						fileInput.close();						
+
+					} catch (IOException i ){
+						i.printStackTrace();
+					} catch (ClassNotFoundException c){
+						c.printStackTrace();
 					}
 				}
-				//GuestLogin f = new GuestLogin();
+
+				//Confirmation that the file for de-serialized
+				JDialog conflict = new JDialog();
+				conflict.setModalityType(ModalityType.APPLICATION_MODAL);
+				conflict.setResizable(false);
+				conflict.setLayout(new GridLayout(2, 0));
+				conflict.add(new JLabel("Deserialized the file!"));
+				JButton doneButton = new JButton("Yay :)");
+				doneButton.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						conflict.dispose();
+					}
+				});
+				conflict.add(doneButton);
+				conflict.pack();
+				conflict.setVisible(true);;
 			}
 		});
 
+		//RoomView and monthView
 		JButton viewBtn = new JButton("View Information");
 		viewBtn.setPreferredSize(btnDim);
 
@@ -79,9 +111,9 @@ public class ManagerMenu extends JFrame
 				m.setVisible(true);
 				ManagerMenu.this.setVisible(false);
 			}
-		}
-				);
-
+		});
+		
+		//Serialize the file
 		JButton saveBtn = new JButton("Save Reservations and Quit");
 		saveBtn.setPreferredSize(btnDim);
 
@@ -91,20 +123,27 @@ public class ManagerMenu extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				try {
-					File file = new File("./Reservation.txt");
-					ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-					out.writeObject(hotel);
-					out.close();
+				if(h.isEmpty()) {
 					System.exit(0);
+				} 
 
-				} catch(IOException exception) {
-					JOptionPane.showMessageDialog(null, exception);
+				String fileName = "hotel.ser";
+				File fileIn = new File(fileName);
+				try {
+					if(!fileIn.exists()) {
+						FileOutputStream fileOut = new FileOutputStream(fileIn);
+						ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+						objOut.writeObject(hotel);
+						objOut.close();
+						fileOut.close();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-			}
-		}
-				);
 
+				System.exit(0);
+			}
+		});
 		JButton back = new JButton("<");
 		back.setPreferredSize(btnDim);
 

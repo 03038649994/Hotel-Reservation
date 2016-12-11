@@ -13,9 +13,19 @@ import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * A class representing the room view for the manager
+ *@author Matthew Binning
+ *@version 11.5818.221
+ *
+ */
 public class RoomView extends JPanel
 {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * A constructor to construct the room view for the manager
+	 * @param h - the hotel we're working with
+	 */
 	public RoomView(Hotel h)
 	{
 		setMaximumSize(new Dimension(500, 200));
@@ -23,10 +33,21 @@ public class RoomView extends JPanel
 		add(new RoomPanel(h));
 		add(new RoomInfoPanel(h));
 	}
+
+	/**
+	 * A nested class representing the information panel for the rooms
+	 *@author Matthew Binning
+	 *@version 11.5818.221
+	 *
+	 */
 	private static class RoomPanel extends JPanel
 	{
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * A constructor to construct the information panel
+		 * @param h - the hotel we're working with
+		 */
 		public RoomPanel(Hotel h)
 		{
 			setMaximumSize(new Dimension(215, 200));
@@ -50,11 +71,23 @@ public class RoomView extends JPanel
 			}
 		}
 	}
+
+	/**
+	 * A class populating all the information inside the room information panel
+	 *@author Matthew Binning
+	 *@version 11.5818.221
+	 *
+	 */
 	private static class RoomInfoPanel extends JPanel implements ChangeListener
 	{
 		private static final long serialVersionUID = 1L;
 		private JTextArea roomInfoText;
 		private Hotel h;
+		
+		/**
+		 * A constructor to initialize and populate the information panel
+		 * @param h - the hotel we're working with
+		 */
 		public RoomInfoPanel(Hotel h)
 		{
 			this.h = h;

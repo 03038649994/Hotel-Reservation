@@ -521,4 +521,16 @@ public class Hotel implements Serializable {
 
 		return null;
 	}
+	
+	/**
+	 * A method to check if the Hotel is empty
+	 * @return true if there's no reservations in the hotel; false otherwise
+	 */
+	public boolean isEmpty() {
+		if (reservationList.isEmpty()) {
+			return true;
+		}
+		
+		return false;
+	}
 }

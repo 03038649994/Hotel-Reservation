@@ -1,5 +1,3 @@
-import java.util.Iterator;
-
 /**
  * A simple receipt format following the strategy pattern
  * @version 1.2016.991
@@ -9,8 +7,7 @@ public class SimpleReceiptFormat implements ReceiptFormatter
 {	
 	private Hotel hotel;
 	private int totalOfTrans;
-
-
+	
 	/**
 	 * A constructor to initialize the simple receipt instance variables
 	 * @param h - the hotel we're working with
@@ -35,7 +32,7 @@ public class SimpleReceiptFormat implements ReceiptFormatter
 		{
 			Room room = hotel.getRooms().get(reservation.getRoomNumber());
 			receipt += ("Room #: " + room.getRoomNumber() + '\n');
-			totalOfTrans += room.getRoomCost() * (reservation.getEndDate().getTimeInMillis() - reservation.getStartDate().getTimeInMillis()) / (1000 * 60 * 60 * 24);
+			totalOfTrans += room.getRoomCost() * (reservation.getEndDate().getTimeInMillis() - reservation.getStartDate().getTimeInMillis()) / (10000 * 60 * 60 * 24);
 		}
 		return receipt += "Total amount due is: " + totalOfTrans;
 	}

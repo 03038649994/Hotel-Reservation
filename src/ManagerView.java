@@ -9,16 +9,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * A class representing the manager's functions
+ *@author Matthew Binning
+ *@version 11.5818.221
+ *
+ */
 public class ManagerView extends JFrame
 {
+	//instance variables of the manager
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * A constructor to construct the manager's JFrame
+	 * @param h - the hotel we're working with
+	 * @param parent - the current panel's parent
+	 */
 	public ManagerView(Hotel h, JFrame parent)
 	{
-		setSize(500, 600);
+		setSize(600, 600);
 		setResizable(false);
 
 		setTitle("Hotel Reservation System");

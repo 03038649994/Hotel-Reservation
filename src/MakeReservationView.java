@@ -11,41 +11,61 @@ import javax.swing.event.ChangeListener;
 import javax.swing.text.MaskFormatter;
 /**
  * Reservation GUI for guest to find a 
- * type of room between the given dates 
+ * type of room between the given dates
+ * @author Evan Kardos
+ * @version 0.1001.001 
  */
 public class MakeReservationView extends JFrame
 {
+	//instance variables of the jFrame
 	private static final long serialVersionUID = 1L;
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final Dimension btnDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
 	private Hotel h;
 	private JFrame parent;
+
+	/**
+	 * A method to get the parent JFrame of the current frame
+	 * @return parent - the current frame's parent
+	 */
 	public JFrame getParental()
 	{
 		return parent;
 	}
+	/**
+	 * A method to shift the calendar by a certain day
+	 * @param calendar - the calendar we're working with
+	 * @param dayShift - the number of days we need to shift by
+	 * @return c 0 the calendar with the days shifted
+	 */
 	public static Calendar shiftCalendar(Calendar calendar, int dayShift)
 	{
 		Calendar c = (Calendar) calendar.clone();
 		int monthShift = c.get(Calendar.MONTH);
 		int yearShift = c.get(Calendar.YEAR);
-		System.out.println(monthShift +" "+ yearShift);
-		
+		//System.out.println(monthShift +" "+ yearShift);
+
 		while(dayShift > c.getActualMaximum(Calendar.DAY_OF_MONTH)){monthShift++; dayShift -= c.getActualMaximum(Calendar.DAY_OF_MONTH);}
 		while(monthShift > c.getActualMaximum(Calendar.MONTH)){yearShift++; monthShift -= c.getActualMaximum(Calendar.MONTH)+1;}
-		
+
 		c.set(Calendar.DAY_OF_MONTH, dayShift);
 		c.set(Calendar.MONTH, monthShift);
 		c.set(Calendar.YEAR, yearShift);
 		return c;
 	}
+	/**
+	 * A constructor to initialize the current frame
+	 * @param h - the hotel we're working with
+	 * @param parent - the current frame's parent frame
+	 * @throws ParseException - exception if reservation doesn't work correctly
+	 */
 	public MakeReservationView(Hotel h, JFrame parent) throws ParseException
 	{
 		this.parent = parent;
 		this.h = h;
 		JLabel lblName = new JLabel("Make a Reservation");
-		setSize(500, 500);
+		setSize(600, 600);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
 		setResizable(false);
@@ -68,18 +88,27 @@ public class MakeReservationView extends JFrame
 						parent.setVisible(true);
 						MakeReservationView.this.dispose();
 					}
-				}
-				);
+				});
 		//-----------------------------
 		add(lblName, BorderLayout.NORTH);
 		add(reservePanel, BorderLayout.CENTER);
 		add(back,BorderLayout.SOUTH);
 	}
 
+	/**
+	 * A class representing the ending date chooser for the reservation
+	 * @author Evan Kardos
+	 * @version 0.1001.001
+	 */
 	public static class EndDateView extends JFormattedTextField implements ChangeListener
 	{
 		private static final long serialVersionUID = 1L;
 		private Hotel h;
+		/**
+		 * A constructor to initialize the class's variables
+		 * @param h - the hotel we're working with
+		 * @throws ParseException - an exception if date format is wrong
+		 */
 		public EndDateView(Hotel h) throws ParseException
 		{
 			super(new MaskFormatter("##/##/####"));
@@ -97,12 +126,23 @@ public class MakeReservationView extends JFrame
 			setText(currentDate);
 		}
 	}
+
+	/**
+	 * A class representing the panel for making a reservation
+	 * @author Evan Kardos
+	 * @version 0.1001.001
+	 */
 	public static class MakeReservationPanel extends JPanel
 	{
 		private static final long serialVersionUID = 1L;
+		/**
+		 * A constructor to construct the JPanel
+		 * @param h - the hotel we're working with
+		 * @throws ParseException - an exception if the format is incorrect
+		 */
 		public MakeReservationPanel(Hotel h) throws ParseException
 		{
-			setMinimumSize(new Dimension(500, 250));
+			setMinimumSize(new Dimension(600, 300));
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			String currentDate;
 			//-----------------------------------------RESERVATION CONTROLLER INTERFACE----------------------------------
@@ -140,7 +180,7 @@ public class MakeReservationView extends JFrame
 			tfInputDate.setBounds(10, 80, 100, 25);
 
 			Calendar startCal = h.getSelectedDate();
-			
+
 			if(startCal.get(Calendar.DAY_OF_MONTH)>=10)
 				currentDate=(startCal.get(Calendar.MONTH)+1)+"/"+startCal.get(Calendar.DAY_OF_MONTH)+""+startCal.get(Calendar.YEAR);
 			else
@@ -156,7 +196,7 @@ public class MakeReservationView extends JFrame
 									Integer.parseInt(tfInputDate.getText().substring(6)),
 									Integer.parseInt(tfInputDate.getText().substring(0, 2)),
 									Integer.parseInt(tfInputDate.getText().substring(3, 5))
-									
+
 									)
 							);
 
@@ -190,10 +230,22 @@ public class MakeReservationView extends JFrame
 			add(CBRoomType);
 		}
 	}
+
+	/**
+	 * A class representing the room information in a text area
+	 * @author Evan Kardos
+	 * @version 0.1001.001
+	 */
 	public static class RoomTextArea extends JTextArea implements ChangeListener
 	{
+		//instance variables of the RoomTextArea
 		private static final long serialVersionUID = 1L;
 		private Hotel h;
+
+		/**
+		 * A constructor to construct the textArea
+		 * @param h
+		 */
 		public RoomTextArea(Hotel h)
 		{
 			this.h = h;
@@ -217,19 +269,31 @@ public class MakeReservationView extends JFrame
 			}
 		}
 	}
+
+	/**
+	 * A class representing all available reservations panel
+	 * @author Evan Kardos
+	 * @version 0.1001.001
+	 */
 	public static class AvailableReservationView extends JPanel
 	{
 		private static final long serialVersionUID = 1L;
 		private MakeReservationView holder;
+		
+		/**
+		 * A constructor to construct the available reservations panel
+		 * @param h - the holder we're working with
+		 * @param holder - the Reservation holder for a user
+		 */
 		public AvailableReservationView(Hotel h, MakeReservationView holder)
 		{
 			this.holder = holder;
-			setSize(500, 250);
+			setSize(600, 300);
 			setLayout(new BorderLayout());
 
 			//---------labels-----------------------
 			JLabel lblName= new JLabel("Available Reservations");
-			JLabel lblExplain= new JLabel("Enter the room number to reserve");
+			JLabel lblExplain= new JLabel("Enter room number to reserve");
 			lblExplain.setBounds(230, 30, 200, 50);
 
 			//------Panel to view components------
@@ -244,7 +308,7 @@ public class MakeReservationView extends JFrame
 			JButton btDone = new JButton("Done");
 			btDone.setBounds(230, 70, 70, 25);
 			btDone.setVisible(false);
-			
+
 			JButton btConfirm = new JButton("Confirm");
 			btConfirm.setBounds(300, 70, 150, 25);
 

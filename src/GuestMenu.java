@@ -12,8 +12,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * A class representing the guest's functions
+ * @author Karan Bhargava
+ * @version 1.2016.991
+ *
+ */
 public class GuestMenu extends JFrame
 {
+	//instance variables for the frame
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
 	private static final String DEFAULT_NAME="Ex. Joe Schmoe";
@@ -21,9 +28,14 @@ public class GuestMenu extends JFrame
 	private static final Dimension textFieldDim = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT/2);
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * A constructor to initialize the frame components
+	 * @param h - the hotel we're working with
+	 * @param parent - the GuestMenu's parent to go back to the previous frame
+	 */
 	public GuestMenu(Hotel h,JFrame parent)
 	{
-		setSize(500, 500);
+		setSize(600, 600);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

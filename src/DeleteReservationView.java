@@ -11,14 +11,18 @@ import javax.swing.event.ChangeListener;
 
 
 /**
- * GUI that displays the available rooms
- * from the given dates from ReservationView
+ *GUI that displays the available rooms
+ *from the given dates from ReservationView
  *and allows the rooms to be reserved from the
  *hotel object.
+ *
+ * @author Evan Kardos
+ * @version 1.2016.991
  */
 
 public class DeleteReservationView extends JFrame
 {	
+	//instance variables of the frame
 	private static final long serialVersionUID = 1L;
 	private static final int BUTTON_WIDTH=400;
 	private static final int BUTTON_HEIGHT=50;
@@ -29,13 +33,19 @@ public class DeleteReservationView extends JFrame
 	private JLabel lblExplain;
 	private Hotel h;
 
+	/**
+	 * A constructor to initialize the JFrame
+	 * @param h - the hotel's we're working with
+	 * @param parent - the delete reservation view's parent frame
+	 */
 	public DeleteReservationView(Hotel h, JFrame parent)
 	{
 		this.h=h;
 
-		setSize(500, 500);
+		setSize(600, 600);
 		setTitle("Hotel Reservation System");
 		setLayout(new BorderLayout());
+		setResizable(false);
 
 		//---------labels-----------------------
 		JLabel lblName = new JLabel("DELETE A RESERVATION");
