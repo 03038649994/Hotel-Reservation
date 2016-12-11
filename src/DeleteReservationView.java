@@ -13,8 +13,7 @@ import javax.swing.event.ChangeListener;
  *from the given dates from ReservationView
  *and allows the rooms to be reserved from the
  *hotel object.
- *
- * @author Evan Kardos & Matthew Binning
+ * @author Evan Kardos and Matthew Binning
  * @version 1.2016.991
  */
 

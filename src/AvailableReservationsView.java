@@ -138,9 +138,9 @@ public class AvailableReservationsView extends JFrame implements ChangeListener{
 	/**
 	 * displays the available rooms on 
 	 * the text Area
-	 * @param cal
-	 * @param roomType
-	 * @param date
+	 * @param start - the start date
+	 * @param end - the end date
+	 * @param roomType - the type of room (luxury or economic)
 	 */
 	public void displayAvailableRooms(Calendar start,Calendar end,int roomType ){
 		

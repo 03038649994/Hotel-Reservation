@@ -16,7 +16,6 @@ public class User implements Serializable
 	 * A constructor to construct the users for the hotel
 	 * @param id - the userID of the user
 	 * @param name - the name of the passenger
-	 * @param password - the password for the user
 	 */
 	public User(int id, String name) {userID = id; userName = name;}
 

@@ -14,8 +14,6 @@ public class SimpleReceiptFormat implements ReceiptFormatter
 	/**
 	 * A constructor to initialize the simple receipt instance variables
 	 * @param h - the hotel we're working with
-	 * @param g - the guest we're working with
-	 * @param iD - the transactionID 
 	 */
 	public SimpleReceiptFormat(Hotel h)
 	{

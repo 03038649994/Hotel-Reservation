@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 
 /**
  * A class representing the guest's functions
- * @author Karan Bhargava & Matthew Binning
+ * @author Karan Bhargava and Matthew Binning
  * @version 1.2016.991
  *
  */

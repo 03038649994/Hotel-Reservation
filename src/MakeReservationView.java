@@ -244,7 +244,7 @@ public class MakeReservationView extends JFrame
 
 		/**
 		 * A constructor to construct the textArea
-		 * @param h
+		 * @param h - the hotel we're working with
 		 */
 		public RoomTextArea(Hotel h)
 		{

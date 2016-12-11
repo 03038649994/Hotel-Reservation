@@ -18,7 +18,7 @@ import javax.swing.event.ChangeListener;
 
 /**
  * A class representing a hotel for the hotel management system
- * @author Karan Bhargava & Matthew Binning
+ * @author Karan Bhargava and Matthew Binning
  * @version 1.2016.991
  *
  */
@@ -207,7 +207,7 @@ public class Hotel implements Serializable {
 	}
 	/**
 	 * A method to return an iterator for rooms with multiple reservations
-	 * @param Room the room with sought reservations
+	 * @param room - the room with sought reservations
 	 * @return an iterator for reservations under same Room
 	 */
 	public Iterator<Reservation> reservationIterator (Room room) {
@@ -260,8 +260,8 @@ public class Hotel implements Serializable {
 	}
 	/**
 	 * A method to get an iterator for reservations with dates betwixt s and e
-	 * @param s the start date to check against
-	 * @param e the end date to check against
+	 * @param start - the start date to check against
+	 * @param end - the end date to check against
 	 * @return an iterator for reservations under the same date
 	 */
 	public Iterator<Reservation> reservationIterator (Calendar start, Calendar end)
@@ -270,8 +270,9 @@ public class Hotel implements Serializable {
 	}
 	/**
 	 * A method to get an iterator for reservations with dates betwixt s and e
-	 * @param s the start date to check against
-	 * @param e the end date to check against
+	 * @param start - the start date to check against
+	 * @param end - the end date to check against
+	 * @param e - the room we're working with
 	 * @return an iterator for reservations under the same date
 	 */
 	public Iterator<Reservation> reservationIterator (Calendar start, Calendar end, Room e)
@@ -322,8 +323,9 @@ public class Hotel implements Serializable {
 	}
 	/**
 	 * gets available rooms betwixt the dates, of the specific room type
-	 * @param s the start date of available rooms
-	 * @param e the end date of available rooms
+	 * @param s - the start date of available rooms
+	 * @param e - the end date of available rooms
+	 * @param roomType - the integer representing the price of the room
 	 * @return a list of rooms without reservations between the dates
 	 */
 	public ArrayList<Room> getAvailableRooms(Calendar s, Calendar e, int roomType)
@@ -356,33 +358,23 @@ public class Hotel implements Serializable {
 	private void update(){for(ChangeListener c: listeners){c.stateChanged(new ChangeEvent(this));}}
 	/**
 	 * This scrolls the selected date back by 1 year
-	 * PRECONDITION: ??
-	 * POSTCONDITION: ??
 	 */
 	public void yesteryear(){selectedDate.add(Calendar.YEAR, -1); update();}
 	/**
 	 * This scrolls the selected date back by 1 month
-	 * PRE: ??
-	 * POST: ??
 	 */
 	public void yestermonth(){selectedDate.add(Calendar.MONTH, -1); update();}
 	/**
 	 * This scrolls the selected date forth by 1 year
-	 * PRECONDITION: ??
-	 * POSTCONDITION: ??
 	 */
 	public void nextYear(){selectedDate.add(Calendar.YEAR, 1); update();}
 	/**
 	 * This scrolls the selected date forth by 1 month
-	 * PRECONDITION: ??
-	 * POSTCONDITION: ??
 	 */
 	public void nextMonth(){selectedDate.add(Calendar.MONTH, 1); update();}
 	/**
 	 * a method to set the selected date for the month view
 	 * @param day the numerical representation of the day of month
-	 * Precondition: ???
-	 * Postcondition: ???
 	 */
 	public void setSelectedDay(int day)
 	{
@@ -392,7 +384,7 @@ public class Hotel implements Serializable {
 	}
 	/**
 	 * sets the selected date to a specific date
-	 * @param date the date to select
+	 * @param date - the date to select
 	 */
 	public void setSelectedDate(Calendar date)
 	{
@@ -409,21 +401,18 @@ public class Hotel implements Serializable {
 	}
 	/**
 	 * sets the selected 2nd date (for the guest view) to a specific date
-	 * @param date the date to select
+	 * @param date - the date to select
 	 */
 	public void setSelectedDate2(Calendar date){selectedDate2 = date; update();}
 	/**
 	 * a method to set the selected room for the room view
-	 * @param room the chosen room
-	 * Precondition: ???
-	 * Postcondition: ???
+	 * @param room - the chosen room
 	 */
 	public void setSelectedRoom(Room room){selectedRoom = room; update();}
 	/**
 	 * a method to set the logged in user for the guest view
-	 * @param User the user logging in
+	 * @param user - the user logging in
 	 * Precondition: the user must be in the hotel data structure
-	 * Postcondition: ???
 	 */
 	public void setSelectedUser(User user){selectedUser = user; update();}
 	/**
@@ -453,6 +442,7 @@ public class Hotel implements Serializable {
 	public void flushRecentRes(){mostRecentRes = new ArrayList<Reservation>();}
 	/**
 	 * Removes all users and reservations, to prepare for deserialization with another hotel
+	 * @param h - the hotel we're working with
 	 */
 	public void flushAll(Hotel h)
 	{

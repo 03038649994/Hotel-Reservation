@@ -17,7 +17,6 @@ public class Reservation implements Serializable, Comparable<Reservation>
 	private Room room;
 	/**
 	 * A constructor to construct a reservation
-	 * @param transID - the transaction ID
 	 * @param sDate - the start date
 	 * @param eDate - the end date
 	 * @param iD - the user's ID
