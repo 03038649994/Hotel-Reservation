@@ -37,7 +37,7 @@ public class PrintFrame extends JFrame
 		setResizable(false);
 
 		JPanel northPanel = new JPanel();
-		JLabel label = new JLabel("Account information print");
+		JLabel label = new JLabel("Account Information Print");
 		northPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
 		label.setFont(new Font("Sans-Serif", Font.PLAIN, 24));
 		northPanel.add(label);

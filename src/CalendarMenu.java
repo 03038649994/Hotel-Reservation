@@ -29,6 +29,12 @@ public class CalendarMenu extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		
+		JPanel northPanel = new JPanel();
+		JLabel label = new JLabel("Welcome to our hotel!\n Please choose an option");
+		northPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+		label.setFont(new Font("Sans-Serif", Font.PLAIN, 24));
+		northPanel.add(label);
+		
 		//buttons of the system
 		JButton guest= new JButton("Guest");
 		guest.setPreferredSize(btnDim);
@@ -61,8 +67,6 @@ public class CalendarMenu extends JFrame
 					}
 				}
 		);
-
-		JLabel label= new JLabel("Welcome");
 		
 		JPanel btnPanel = new JPanel();
 		btnPanel.add(guest, JPanel.TOP_ALIGNMENT);

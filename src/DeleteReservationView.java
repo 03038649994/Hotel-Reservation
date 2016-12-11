@@ -46,9 +46,9 @@ public class DeleteReservationView extends JFrame
 		setResizable(false);
 
 		//---------labels-----------------------
-		JLabel lblName = new JLabel("DELETE A RESERVATION");
+		JLabel lblName = new JLabel("Delete a reservation");
 		lblExplain = new JLabel("Enter the index number to delete");
-		lblExplain.setBounds(230, 30, 200, 50);
+		lblExplain.setBounds(230, 30, 230, 50);
 
 		//------Panel to view components------
 		JPanel jpView = new JPanel();

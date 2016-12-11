@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -10,7 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  * A class representing the guest's functions
@@ -141,7 +144,11 @@ public class GuestMenu extends JFrame
 
 		guestPanel.add(firstTimePanel);
 		//-------------------------------------------------------------------------
-		JLabel label = new JLabel("Guest View Menu");
+		JPanel northPanel = new JPanel();
+		JLabel label = new JLabel("Thank you for choosing us for your stay. :)");
+		northPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+		label.setFont(new Font("Sans-Serif", Font.PLAIN, 24));
+		northPanel.add(label);
 
 		JButton back = new JButton("<");
 		back.setPreferredSize(btnDim);
