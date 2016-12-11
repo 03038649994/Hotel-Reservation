@@ -1,5 +1,8 @@
+import java.util.concurrent.TimeUnit;
+
 /**
  * A simple receipt format following the strategy pattern
+ * @author Matthew Binning (originally Karan Bhargava)
  * @version 1.2016.991
  *
  */
@@ -32,7 +35,9 @@ public class SimpleReceiptFormat implements ReceiptFormatter
 		{
 			Room room = hotel.getRooms().get(reservation.getRoomNumber());
 			receipt += ("Room #: " + room.getRoomNumber() + '\n');
-			totalOfTrans += room.getRoomCost() * (reservation.getEndDate().getTimeInMillis() - reservation.getStartDate().getTimeInMillis()) / (10000 * 60 * 60 * 24);
+			long startTime = reservation.getStartDate().getTimeInMillis();
+			long endTime = reservation.getEndDate().getTimeInMillis();
+			totalOfTrans += room.getRoomCost() * (TimeUnit.MILLISECONDS.toDays(Math.abs(endTime - startTime)));
 		}
 		return receipt += "Total amount due is: " + totalOfTrans;
 	}

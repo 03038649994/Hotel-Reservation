@@ -12,7 +12,7 @@ import javax.swing.text.MaskFormatter;
 /**
  * Reservation GUI for guest to find a 
  * type of room between the given dates
- * @author Evan Kardos
+ * @author Matthew Binning
  * @version 0.1001.001 
  */
 public class MakeReservationView extends JFrame

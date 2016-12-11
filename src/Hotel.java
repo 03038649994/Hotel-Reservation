@@ -11,13 +11,14 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
  * A class representing a hotel for the hotel management system
- * @author Karan Bhargava
+ * @author Karan Bhargava & Matthew Binning
  * @version 1.2016.991
  *
  */
@@ -99,6 +100,11 @@ public class Hotel implements Serializable {
 	 * 
 	 * ---------------------------------------------------
 	 */
+	/**
+	 * Gets all of the changelisteners, necessary for proper deserialization
+	 * @return a list of all the changelisteners
+	 
+	public List<ChangeListener> getCLs(){return listeners;}*/
 	/**
 	 * Finds the most recently added reservation
 	 * @return a reservation
@@ -421,7 +427,7 @@ public class Hotel implements Serializable {
 	 */
 	public void setSelectedUser(User user){selectedUser = user; update();}
 	/**
-	 * A method to add a room to the list of rooms
+	 * A method to add a room to the list of rooms, for deserializaton
 	 * @param roomToAdd - the room to add
 	 */
 	public void addRoom(Room roomToAdd) {roomsInHotel.add(roomToAdd); update();}
@@ -445,6 +451,24 @@ public class Hotel implements Serializable {
 	 * a method to clear the buffer of recent reservations
 	 */
 	public void flushRecentRes(){mostRecentRes = new ArrayList<Reservation>();}
+	/**
+	 * Removes all users and reservations, to prepare for deserialization with another hotel
+	 */
+	public void flushAll(Hotel h)
+	{
+		usersOfHotel = new ArrayList<User>();
+		reservationList = new ArrayList<Reservation>();
+		roomsInHotel = new ArrayList<Room>();
+		listeners = new ArrayList<ChangeListener>();
+		
+		Iterator<User> uI = h.userIterator();
+		Iterator<Reservation> rI = h.reservationIterator();
+		Iterator<Room> mI = h.roomIterator();
+		
+		while(uI.hasNext()){addUser(uI.next());}
+		while(rI.hasNext()){addReservation(rI.next());} //update called
+		while(mI.hasNext()){addRoom(mI.next());}
+	}
 	/**
 	 * A method to remove a reservation from the arrayList
 	 * @param reserve - the reservation to remove
@@ -502,7 +526,6 @@ public class Hotel implements Serializable {
 		in.defaultReadObject();
 		listeners = new ArrayList<ChangeListener>();
 	}
-
 
 	/**
 	 * A method to find the user by their ID

@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 /**
  * A class representing the guest's functions
- * @author Karan Bhargava
+ * @author Karan Bhargava & Matthew Binning
  * @version 1.2016.991
  *
  */

@@ -64,8 +64,8 @@ public class ManagerMenu extends JFrame
 					try {
 						FileInputStream fileInput = new FileInputStream(fileIn);
 						ObjectInputStream objIn = new ObjectInputStream(fileInput);
-
-						hotel = (Hotel) objIn.readObject();
+						
+						hotel.flushAll((Hotel) objIn.readObject());
 						objIn.close();
 						fileInput.close();						
 
@@ -92,7 +92,7 @@ public class ManagerMenu extends JFrame
 				});
 				conflict.add(doneButton);
 				conflict.pack();
-				conflict.setVisible(true);;
+				conflict.setVisible(true);
 			}
 		});
 

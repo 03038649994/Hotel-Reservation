@@ -1,8 +1,10 @@
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A class representing a more comprehensive
  * receipt as request (following the strategy pattern)
+ * @author Matthew Binning (originally Karan Bhargava)
  */
 public class ComprehensiveReceiptFormat implements ReceiptFormatter {
 
@@ -36,7 +38,9 @@ public class ComprehensiveReceiptFormat implements ReceiptFormatter {
 			Room r = hotel.getRooms().get(temp.getRoomNumber());
 			receipt += temp.toString() + "\n";
 
-			total += r.getRoomCost() * (temp.getEndDate().getTimeInMillis() - temp.getStartDate().getTimeInMillis()) / (10000 * 60 * 60 * 24);
+			long startTime = temp.getStartDate().getTimeInMillis();
+			long endTime = temp.getEndDate().getTimeInMillis();
+			total += r.getRoomCost() * (TimeUnit.MILLISECONDS.toDays(Math.abs(endTime - startTime)));
 		}
 		return receipt += "The total amount due is: " + total;
 	}

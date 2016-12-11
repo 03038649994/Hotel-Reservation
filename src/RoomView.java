@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -131,7 +132,9 @@ public class RoomView extends JPanel
 					int day1 = start.get(Calendar.DATE); int day2 = end.get(Calendar.DATE);
 					int month1 = start.get(Calendar.MONTH)+1; int month2 = end.get(Calendar.MONTH)+1;
 					int year1 = start.get(Calendar.YEAR); int year2 = end.get(Calendar.YEAR);
-					int duration = end.get(Calendar.DAY_OF_YEAR)-start.get(Calendar.DAY_OF_YEAR);
+					long startTime = res.getStartDate().getTimeInMillis();
+					long endTime = res.getEndDate().getTimeInMillis();
+					int duration = (int) TimeUnit.MILLISECONDS.toDays(Math.abs(endTime - startTime));
 					roomInfoText.append("Start date: "+month1+"/"+day1+"/"+year1+"\n");
 					roomInfoText.append("End date: "+month2+"/"+day2+"/"+year2+"\n");
 					roomInfoText.append("Duration of stay: "+duration+" "+((duration>1)? "nights" : "night")+"\n");

@@ -8,15 +8,13 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
-
 /**
  *GUI that displays the available rooms
  *from the given dates from ReservationView
  *and allows the rooms to be reserved from the
  *hotel object.
  *
- * @author Evan Kardos
+ * @author Evan Kardos & Matthew Binning
  * @version 1.2016.991
  */
 

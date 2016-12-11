@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 /**
  * A class representing a room for the hotel management system
- * @author Karan Bhargava
+ * @author Karan Bhargava and Matthew Binning
  * @version 1.2016.991
  *
  */

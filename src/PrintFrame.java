@@ -18,7 +18,7 @@ import javax.swing.border.Border;
 
 /**
  * A class representing the print frame
- * @author Karan Bhargava
+ * @author Karan Bhargava and Matthew Binning
  * @version 1.2016.991
  */
 public class PrintFrame extends JFrame

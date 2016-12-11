@@ -1,6 +1,6 @@
 /**
  * A class representing the main program to run the project
- * @author Karan Bhargava
+ * @author Matthew Binning
  * @version 1.2016.991
  *
  */
